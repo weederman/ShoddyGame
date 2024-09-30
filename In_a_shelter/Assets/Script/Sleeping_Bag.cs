@@ -23,6 +23,7 @@ public class Sleeping_Bag : MonoBehaviour
     public TextMeshProUGUI daysText;         // 며칠이 지났는지 표시하는 텍스트
 
     private string question = "Want to Sleep?";  // 타이핑될 텍스트 내용
+    private bool isTyping = false;//타이핑 중인지 확인
 
     void Start()
     {
@@ -58,7 +59,7 @@ public class Sleeping_Bag : MonoBehaviour
             objectMaterial.SetFloat(outlineProperty, 1f);
 
             // F 키를 눌렀을 때 이벤트 발생
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F)&&!isTyping)
             {
                 OpenTextPanel();
             }
@@ -89,12 +90,13 @@ public class Sleeping_Bag : MonoBehaviour
     // 타이핑 효과 코루틴
     private IEnumerator TypeText()
     {
+        isTyping = true;
         foreach (char letter in question.ToCharArray())
         {
             questionText.text += letter;
-            yield return new WaitForSeconds(0.1f);  // 각 글자마다 0.1초 대기
+            yield return new WaitForSeconds(0.05f);  // 각 글자마다 0.1초 대기
         }
-
+        isTyping = false;
         // 타이핑이 끝난 후 버튼 활성화
         yesButton.gameObject.SetActive(true);
         noButton.gameObject.SetActive(true);
