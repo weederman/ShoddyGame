@@ -12,7 +12,7 @@ public class Dialogue
     public string title;
     public string selection1Text;
     public string selection2Text;
-
+    
 }
 
 public class DialogueManager : MonoBehaviour
@@ -25,10 +25,23 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Text txt_title;
     [SerializeField] private Text txt_selection1;
     [SerializeField] private Text txt_selection2;
-
+    FadeInOutManager FadeManager;
     private bool isDialogue = false; // 대화가 진행중인지
     private int count = 0; //대사가 얼마나 진행되었는지
     [SerializeField] private Dialogue[] log;
+    private void Start()
+    {
+        FadeManager = FindObjectOfType<FadeInOutManager>();
+        Text[] Panel_Text=sprite_DialogueBox.GetComponentsInChildren<Text>();
+        Debug.Log(Panel_Text.Length);
+        txt_title = Panel_Text[0];
+        txt_dialogue = Panel_Text[1];
+        Button[] Panel_Button=sprite_DialogueBox.GetComponentsInChildren<Button>();
+        Selection1 = Panel_Button[0];
+        Selection2 = Panel_Button[1];
+        txt_selection1=Selection1.GetComponentInChildren<Text>();
+        txt_selection2=Selection2.GetComponentInChildren<Text>();
+    }
 
     public void ShowDialogue(string context)
     {
@@ -37,13 +50,13 @@ public class DialogueManager : MonoBehaviour
             case "침낭":
                 Selection1.onClick.RemoveAllListeners();
                 Selection2.onClick.RemoveAllListeners();
-                Selection1.onClick.AddListener(() => GameManager.Instance.NextDay());
+                Selection1.onClick.AddListener(() => FadeManager.NextDay());
                 Selection2.onClick.AddListener(() => OFFdialogue());
                 break;
             case "문":
                 Selection1.onClick.RemoveAllListeners();
                 Selection2.onClick.RemoveAllListeners();
-                Selection1.onClick.AddListener(() => GameManager.Instance.AdventureStart());
+                Selection1.onClick.AddListener(() => FadeManager.AdventureStart());
                 Selection2.onClick.AddListener(() => OFFdialogue());
                 break;
         }
@@ -91,6 +104,8 @@ public class DialogueManager : MonoBehaviour
                 Selection2.gameObject.SetActive(true);
             }
             else {//선택지가 없는 대화창일 경우
+                Selection1.gameObject.SetActive(false);
+                Selection2.gameObject.SetActive(false);
                 if (Input.GetKeyDown(KeyCode.Space))//만약 스페이스바가 눌렸을 떄
                 {
                     if (count < log.Length) NextDialogue();//대화가 더 있으면 다음 대화 출력

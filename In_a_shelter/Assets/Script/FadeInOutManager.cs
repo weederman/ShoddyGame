@@ -2,19 +2,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class FadeInOutManager : MonoBehaviour
 {
     public Image fadeScreen; // 페이드 스크린
     public TextMeshProUGUI daysText; // 날짜 표시 텍스트
-
+    public bool isTyping = false;
+    DialogueManager logManager;
     private void Start()
     {
-        fadeScreen.gameObject.SetActive(true); // 처음에 화면이 검은색으로 시작
+        logManager = FindObjectOfType<DialogueManager>();
+        fadeScreen.gameObject.SetActive(true); 
         StartCoroutine(FadeOut());
     }
 
-    public IEnumerator FadeIn()
+    public IEnumerator FadeOut()
     {
         fadeScreen.gameObject.SetActive(true);
         Color fadeColor = fadeScreen.color;
@@ -31,8 +34,17 @@ public class FadeInOutManager : MonoBehaviour
         fadeScreen.color = fadeColor;
         fadeScreen.gameObject.SetActive(false);
     }
-
-    public IEnumerator FadeOut()
+    private IEnumerator TypeText(string log)
+    {
+        isTyping = true;
+        foreach (char letter in log.ToCharArray())
+        {
+            daysText.text += letter;
+            yield return new WaitForSeconds(0.05f);  // 각 글자마다 0.1초 대기
+        }
+        isTyping = false;
+    }
+    public IEnumerator FadeIn()
     {
         fadeScreen.gameObject.SetActive(true);
         Color fadeColor = fadeScreen.color;
@@ -58,6 +70,7 @@ public class FadeInOutManager : MonoBehaviour
 
     private IEnumerator FadeInDaysText()
     {
+        daysText.gameObject.SetActive(true);
         Color textColor = daysText.color;
         textColor.a = 0f;
         daysText.color = textColor;
@@ -68,7 +81,7 @@ public class FadeInOutManager : MonoBehaviour
             daysText.color = textColor;
             yield return null;
         }
-
+        StartCoroutine(TypeText("DAY " + GameManager.Instance.survivalDays.ToString()));
         yield return new WaitForSeconds(2f); // 2초 대기
 
         while (textColor.a > 0f)
@@ -80,4 +93,22 @@ public class FadeInOutManager : MonoBehaviour
 
         daysText.gameObject.SetActive(false); // 텍스트 비활성화
     }
+    public void NextDay()
+    {
+        logManager.OFFdialogue();
+        GameManager.Instance.survivalDays++;
+        daysText.text = "";
+        StartCoroutine(NextDayCoroutine());
+    }
+    private IEnumerator NextDayCoroutine()
+    {
+        yield return StartCoroutine(FadeIn());
+        yield return StartCoroutine(FadeInDaysText());
+        yield return StartCoroutine(FadeOut());
+    }
+    public void AdventureStart()
+    {
+        SceneManager.LoadScene("Adventure");
+    }
+
 }

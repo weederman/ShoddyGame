@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     public GameObject textPanel;
     public Text talkText;
     public GameObject scanObject;
+
     public void Action(GameObject name)
     {
         scanObject = name;
