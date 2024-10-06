@@ -105,7 +105,8 @@ public class Sleeping_Bag : MonoBehaviour
     // "예" 버튼 클릭 시 실행
     private void OnYesClicked()
     {
-        textPanel.SetActive(false);  // 패널 닫기
+        textPanel.SetActive(false);  // 패널 닫기   (일단 패널 닫기부터 오래걸림. 거의 5초 걸림
+        Debug.Log("패널 닫기 성공");
         GameManager.Instance.survivalDays++;  // GameManager에서 생존일 수 증가
         daysText.text = "DAY " + GameManager.Instance.survivalDays; // 생존일 텍스트 업데이트
         StartCoroutine(FadeAndShowDays());  // 화면 페이드 및 날짜 표시

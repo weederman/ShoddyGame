@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject); // 씬 전환 시 파괴되지 않도록 설정
     }
-    public void Update()
+    public void Start()
     {
         GameObject fadePanel = GameObject.Find("FadePanel");
         if (fadePanel != null)
@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
         daysText.gameObject.SetActive(false);    // 텍스트 비활성화
+        DateManager.Instance.SaveGameData();
         SceneManager.LoadScene("Scenes/Tutorial/Shelter");
         // 화면을 서서히 밝게 (페이드 아웃)
         /*while (fadeColor.a > 0f)
@@ -144,4 +145,8 @@ public class GameManager : MonoBehaviour
         fadeScreen.color = fadeColor;
         fadeScreen.gameObject.SetActive(false);  // 페이드 아웃 후 화면 숨김
     }
+    //1.. 일단 씬 재실행 개오래 걸림
+    //2. 텍스트 ui 안사라짐
+    //3. 페이드 함수 실행 안됨
+    //4.. 그럼 난 어디에 저장 기능 만들어
 }
