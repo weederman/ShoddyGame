@@ -59,6 +59,12 @@ public class DialogueManager : MonoBehaviour
                 Selection1.onClick.AddListener(() => FadeManager.AdventureStart());
                 Selection2.onClick.AddListener(() => OFFdialogue());
                 break;
+            case "NPC":
+                Selection1.onClick.RemoveAllListeners();
+                Selection2.onClick.RemoveAllListeners();
+
+                break;
+                
         }
         txt_title.text = this.gameObject.name;
         ONOFF(true);
