@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public int survivalDays = 0;  // 생존일 수
     public int Food = 0;
     public int Material = 0;
+    public int Medical = 0;
 
     private void Awake()
     {
