@@ -8,7 +8,7 @@ public class Map_Object : MonoBehaviour
     // 오브젝트 트리거
     public Transform targetObject;
     public GameObject f_Img;  // F키를 눌러 상호작용 가능한 이미지
-    public GameObject f_map_out;
+    public Image f_map_out;
     public float radius;
     public UIManager UImanager;
     // 지도 이미지 UI (큰 지도)
