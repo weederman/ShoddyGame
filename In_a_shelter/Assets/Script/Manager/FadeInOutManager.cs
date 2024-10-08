@@ -91,6 +91,7 @@ public class FadeInOutManager : MonoBehaviour
             yield return null;
         }
 
+        DataManager.Instance.SaveGameData();
         daysText.gameObject.SetActive(false); // 텍스트 비활성화
     }
     public void NextDay()
