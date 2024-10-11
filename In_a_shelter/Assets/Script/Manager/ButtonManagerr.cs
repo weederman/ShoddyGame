@@ -14,13 +14,23 @@ public class ButtonManagerr : MonoBehaviour
     // 게임 로드 버튼
     public void LoadGame()
     {
-        Debug.Log("LoadGame 버튼 클릭됨.");
-        StartCoroutine(LoadGameCoroutine());
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Shelter"); 
+        if (GameManager.Instance != null)
+        {
+            DataManager.Instance.LoadGameData();
+            Debug.Log("게임 로드 완료");
+        }
+        else
+        {
+            Debug.LogError("GameManager 인스턴스가 씬 로드 후에도 존재하지 않습니다.");
+        }
+
+        //StartCoroutine(LoadGameCoroutine());
     }
 
+    /*
     private IEnumerator LoadGameCoroutine()
     {
-        Debug.Log("씬 로드 시작: Shelter");
 
         // 씬을 비동기적으로 로드
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Shelter");
@@ -43,7 +53,8 @@ public class ButtonManagerr : MonoBehaviour
         {
             Debug.LogError("GameManager 인스턴스가 씬 로드 후에도 존재하지 않습니다.");
         }
-    }
+    
+    }*/
 
     public void ExitGame()
     {

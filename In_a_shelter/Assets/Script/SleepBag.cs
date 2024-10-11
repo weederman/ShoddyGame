@@ -12,6 +12,7 @@ public class SleepBag : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        targetObject = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -21,6 +22,7 @@ public class SleepBag : MonoBehaviour
     }
     private void insideBox()
     {
+        
         float distance = Vector2.Distance(transform.position, targetObject.transform.position);
 
         // 오브젝트가 반경 안에 들어왔는지 확인
@@ -30,7 +32,7 @@ public class SleepBag : MonoBehaviour
             f_Img.gameObject.SetActive(true);
 
             //f를 누르면 인벤트 발생
-            if(Input.GetKeyDown(KeyCode.F))
+            if(Input.GetKeyDown(KeyCode.F)&&!logManager.isDialogue)
             {
                 logManager.ShowDialogue(this.gameObject.name);
             }
@@ -41,4 +43,26 @@ public class SleepBag : MonoBehaviour
             f_Img.gameObject.SetActive(false);
         }
     }
+    /*private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+            f_Img.gameObject.SetActive(true);
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Debug.Log("안에 이씀");
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                logManager.ShowDialogue(this.gameObject.name);
+                Debug.Log("IF문 실행");
+            }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+            f_Img.gameObject.SetActive(false);
+    }*/
 }

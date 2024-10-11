@@ -5,15 +5,19 @@ using UnityEngine;
 
 public class NPC_Manager : MonoBehaviour
 {
+    /*
     public List<GameObject> NpcPrefabs = new List<GameObject>(); // NPC 프리팹 리스트
     public List<GameObject> inGame_npc = new List<GameObject>(); // 스폰된 NPC 리스트
+    */
     public Transform spawnLocation; // NPC가 스폰될 위치
+    public GameObject[] npcs;
     private int lastSurvivalDay = 0;
 
     void Start()
     {
-        LoadNpcPrefabs(); // 시작할 때 프리팹 불러오기
+        //LoadNpcPrefabs(); // 시작할 때 프리팹 불러오기
         lastSurvivalDay = GameManager.Instance.survivalDays;
+        SpawnNpc();
     }
 
     void Update()
@@ -21,12 +25,12 @@ public class NPC_Manager : MonoBehaviour
 
         if (GameManager.Instance.survivalDays > lastSurvivalDay)
         {
-            SpawnNpc();
+            
             lastSurvivalDay = GameManager.Instance.survivalDays;
         }
     }
 
-
+    /*
     //NPC 프리랩 불러오기
     void LoadNpcPrefabs()
     {
@@ -38,9 +42,20 @@ public class NPC_Manager : MonoBehaviour
             NpcPrefabs.Add(npc as GameObject); // 리스트에 추가
         }
     }
+    */
+    void SpawnNpc()
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            if (GameManager.Instance.NPC[i])
+            {
+                Instantiate(npcs[i], spawnLocation.position,Quaternion.identity);
+            }
+        }
+    }
 
     // NPC를 스폰
-    public void SpawnNpc()
+    /*public void SpawnNpc()
     {
         if (NpcPrefabs.Count == 0)
         {
@@ -52,5 +67,5 @@ public class NPC_Manager : MonoBehaviour
         GameObject npc = Instantiate(NpcPrefabs[index], spawnLocation.position, Quaternion.identity); // NPC 스폰
         inGame_npc.Add(npc);
         Debug.Log("NPC 스폰: " + npc.name);
-    }
+    }*/
 }

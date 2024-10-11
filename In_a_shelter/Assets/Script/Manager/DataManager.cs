@@ -56,8 +56,9 @@ public class DataManager : MonoBehaviour
 
     public void LoadGameData()
     {
+        Debug.Log("실행중");
         string filePath = Path.Combine(Application.dataPath, GameDataFileName); // 파일 위치
-
+        Debug.Log(filePath);
         if (File.Exists(filePath))
         {
             string FromJsonData = File.ReadAllText(filePath); // 파일 불러오기
@@ -95,7 +96,7 @@ public class DataManager : MonoBehaviour
 
         string ToJsonData = JsonUtility.ToJson(data, true);
         string filePath = Path.Combine(Application.dataPath, GameDataFileName); // 하위 디렉토리에 저장
-
+        
         File.WriteAllText(filePath, ToJsonData);
         Debug.Log($"데이터 저장 완료: {filePath}");
     }

@@ -111,5 +111,11 @@ public class FadeInOutManager : MonoBehaviour
     {
         SceneManager.LoadScene("Adventure");
     }
-
+    public void Get_Rresource()
+    {
+        GameManager.Instance.Food += 10;
+        GameManager.Instance.Material += 10;
+        GameManager.Instance.Medical += 10;
+        logManager.OFFdialogue();
+    }
 }

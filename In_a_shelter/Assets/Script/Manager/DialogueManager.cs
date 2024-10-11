@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
@@ -26,11 +28,12 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Text txt_selection1;
     [SerializeField] private Text txt_selection2;
     FadeInOutManager FadeManager;
-    private bool isDialogue = false; // 대화가 진행중인지
-    private int count = 0; //대사가 얼마나 진행되었는지
+    public bool isDialogue = false; // 대화가 진행중인지
+    public int count = 0; //대사가 얼마나 진행되었는지
     [SerializeField] private Dialogue[] log;
     private void Start()
     {
+        sprite_DialogueBox = GameObject.Find("Canvas").transform.Find("TextPanel").gameObject;
         FadeManager = FindObjectOfType<FadeInOutManager>();
         Text[] Panel_Text=sprite_DialogueBox.GetComponentsInChildren<Text>();
         Debug.Log(Panel_Text.Length);
@@ -45,6 +48,7 @@ public class DialogueManager : MonoBehaviour
 
     public void ShowDialogue(string context)
     {
+        Time.timeScale = 0f;
         switch (context)
         {
             case "침낭":
@@ -64,12 +68,20 @@ public class DialogueManager : MonoBehaviour
                 Selection2.onClick.RemoveAllListeners();
 
                 break;
+            case "EventBox":
+                Selection1.onClick.RemoveAllListeners();
+                Selection2.onClick.RemoveAllListeners();
+                Selection1.onClick.AddListener(() => FadeManager.Get_Rresource());
+                Selection2.onClick.AddListener(()=>OFFdialogue());
+                break;
                 
         }
         txt_title.text = this.gameObject.name;
         ONOFF(true);
+        txt_dialogue.text = log[count].dialogue;
         count = 0;
         NextDialogue();
+        Debug.Log("쇼실행");
     }
     public void ONOFF(bool _flag)
     {
@@ -77,7 +89,11 @@ public class DialogueManager : MonoBehaviour
         txt_dialogue.gameObject.SetActive(_flag);
         txt_title.gameObject.SetActive(_flag);
         isDialogue = _flag;
-        
+        if (!_flag)
+        {
+            Time.timeScale = 1f;
+            count = 0;
+        }
     }
     public void OFFdialogue()//버튼에서 함수가 안떠서 따로 만듦 ㅡㅅㅡ
     {
@@ -88,7 +104,8 @@ public class DialogueManager : MonoBehaviour
         isDialogue = _flag;
         Selection1.gameObject.SetActive(_flag);
         Selection2.gameObject.SetActive(_flag);
-        Debug.Log("꺼져..");
+        Time.timeScale = 1f;
+        count = 0;
     }
 
     private void NextDialogue()

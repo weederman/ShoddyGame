@@ -20,6 +20,8 @@ public class NPC_Move : MonoBehaviour
     void Start()
     {
         // ¹üÀ§ Áß¾Ó ÁÂÇ¥ °è»ê
+        topLeftBoundary = GameObject.Find("TopLeft").transform;
+        bottomRightBoundary = GameObject.Find("BottomRight").transform;
         centerPosition = new Vector2(
             (topLeftBoundary.position.x + bottomRightBoundary.position.x) / 2,
             (topLeftBoundary.position.y + bottomRightBoundary.position.y) / 2

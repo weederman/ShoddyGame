@@ -1,6 +1,6 @@
 {
     "survivalDays": 1,
-    "Food": 0,
-    "Material": 0,
-    "Medical": 0
+    "Food": 60,
+    "Material": 60,
+    "Medical": 60
 }
