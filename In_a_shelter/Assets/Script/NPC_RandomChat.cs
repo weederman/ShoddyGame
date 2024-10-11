@@ -8,15 +8,17 @@ public class NPC_RandomChat : MonoBehaviour
     public GameObject targetObject;
     public GameObject f_Img;
     public float radius;
+    public bool event_issued = false;
+    int tmp_surv_day;
     void Start()
     {
-        
+        tmp_surv_day = GameManager.Instance.survivalDays;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (tmp_surv_day != GameManager.Instance.survivalDays) event_issued = false;
     }
     private void insideBox()
     {
@@ -31,7 +33,7 @@ public class NPC_RandomChat : MonoBehaviour
             //f를 누르면 인벤트 발생
             if (Input.GetKeyDown(KeyCode.F) && !logManager.isDialogue)
             {
-                logManager.ShowDialogue(this.gameObject.name);
+                logManager.ShowDialogue(randomDialogue());
             }
         }
         else
@@ -43,7 +45,19 @@ public class NPC_RandomChat : MonoBehaviour
 
     public string randomDialogue()
     {
-        
+        int random=Random.Range(0, 3);
+        switch (random)
+        {
+            case 0:
+                event_issued = true;
+                return "NPC_Event1";
+            case 1:
+                return "NPC_Event2";
+            case 2:
+                return "NPC_Event3";
+            default:
+                break;
+        }
         return "NPC";
     }
 }
