@@ -556,7 +556,7 @@ MonoBehaviour:
   Food: 0
   Material: 0
   Medical: 0
-  NPC: 0100000000
+  NPC: 0101010101
 --- !u!1 &592903912
 GameObject:
   m_ObjectHideFlags: 0

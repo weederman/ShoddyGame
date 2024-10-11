@@ -66,12 +66,13 @@ public class DialogueManager : MonoBehaviour
             case "NPC":
                 Selection1.onClick.RemoveAllListeners();
                 Selection2.onClick.RemoveAllListeners();
-
+                Selection1.onClick.AddListener(() => FadeManager.Remove_Resource());
+                Selection2.onClick.AddListener(() => OFFdialogue());
                 break;
             case "EventBox":
                 Selection1.onClick.RemoveAllListeners();
                 Selection2.onClick.RemoveAllListeners();
-                Selection1.onClick.AddListener(() => FadeManager.Get_Rresource());
+                Selection1.onClick.AddListener(() => FadeManager.Get_Resource());
                 Selection2.onClick.AddListener(()=>OFFdialogue());
                 break;
                 

@@ -29,7 +29,7 @@ public class NPC_RandomChat : MonoBehaviour
             f_Img.gameObject.SetActive(true);
 
             //f를 누르면 인벤트 발생
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F) && !logManager.isDialogue)
             {
                 logManager.ShowDialogue(this.gameObject.name);
             }
