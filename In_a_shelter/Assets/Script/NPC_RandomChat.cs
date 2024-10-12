@@ -45,7 +45,7 @@ public class NPC_RandomChat : MonoBehaviour
 
     public string randomDialogue()
     {
-        int random=Random.Range(0, 3);
+        int random=Random.Range(0, 4);
         switch (random)
         {
             case 0:
@@ -55,6 +55,8 @@ public class NPC_RandomChat : MonoBehaviour
                 return "NPC_Event2";
             case 2:
                 return "NPC_Event3";
+            case 3:
+                return "";
             default:
                 break;
         }
