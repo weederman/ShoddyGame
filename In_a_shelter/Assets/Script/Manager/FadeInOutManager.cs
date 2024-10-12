@@ -109,6 +109,7 @@ public class FadeInOutManager : MonoBehaviour
     }
     public void AdventureStart()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Adventure");
     }
     public void Get_Resource()
