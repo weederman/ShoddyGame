@@ -24,25 +24,15 @@ public class DialogueManager : MonoBehaviour
     public Button Selection1;
     public Button Selection2;
     [SerializeField] private GameObject sprite_DialogueBox;
-    [SerializeField] private Text txt_dialogue;
-    [SerializeField] private Text txt_title;
-    [SerializeField] private Text txt_selection1;
-    [SerializeField] private Text txt_selection2;
+    public Text txt_dialogue;
+    public Text txt_title;
+    public Text txt_selection1;
+    public Text txt_selection2;
     FadeInOutManager FadeManager;
     public bool isDialogue = false; // 대화가 진행중인지
     public int count = 0; //대사가 얼마나 진행되었는지
     [SerializeField] private Dialogue[] log;
-    public List<Dictionary<string, object>> data_RandomChat;
-    [System.Serializable]
-    public class data_name
-    {
-        public string num;
-        public string name;
-        public string dialouge;
-        public string is_selection;
-        public string selection_dialouge;
-        public string happiness;
-    }
+
     private void Start()
     {
         sprite_DialogueBox = GameObject.Find("Canvas").transform.Find("TextPanel").gameObject;
@@ -56,11 +46,6 @@ public class DialogueManager : MonoBehaviour
         Selection2 = Panel_Button[1];
         txt_selection1=Selection1.GetComponentInChildren<Text>();
         txt_selection2=Selection2.GetComponentInChildren<Text>();
-        data_RandomChat = cvsReader.Read("Log1");
-        if (data_RandomChat == null || data_RandomChat.Count == 0)
-        {
-            Debug.LogError("CSV 데이터가 비어 있습니다.");
-        }
     }
 
     public void ShowDialogue(string context)
@@ -94,11 +79,10 @@ public class DialogueManager : MonoBehaviour
                 break;
                 
         }
-        txt_title.text = (string)data_RandomChat[count]["name"];
+        txt_title.text = this.gameObject.name;
         ONOFF(true);
-        txt_dialogue.text = (string)data_RandomChat[count]["dialouge"];
+        txt_dialogue.text = log[count].dialogue;
         count = 0;
-        isSelection = (bool)data_RandomChat[count]["is selection"];
         NextDialogue();
         Debug.Log("쇼실행");
     }
@@ -129,7 +113,7 @@ public class DialogueManager : MonoBehaviour
 
     private void NextDialogue()
     {
-        txt_dialogue.text = (string)data_RandomChat[count]["dialouge"];
+        txt_dialogue.text = log[count].dialogue;
         count++;
     }
     void Update()
@@ -140,8 +124,8 @@ public class DialogueManager : MonoBehaviour
             {
                 Text Selection1Text = Selection1.GetComponentInChildren<Text>();
                 Text Selection2Text = Selection2.GetComponentInChildren<Text>();
-                Selection1Text.text = (string)data_RandomChat[count]["selection dialouge"];
-                Selection2Text.text = (string)data_RandomChat[count]["selection dialouge"];
+                Selection1Text.text = log[count - 1].selection1Text;
+                Selection2Text.text = log[count - 1].selection2Text;
                 Selection1.gameObject.SetActive(true);
                 Selection2.gameObject.SetActive(true);
             }

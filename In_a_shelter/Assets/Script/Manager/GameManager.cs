@@ -23,6 +23,5 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject); // 씬 전환 시 파괴되지 않도록 설정
         Debug.Log("게임오브젝트생성");
-    }
-    
+    } 
 }
