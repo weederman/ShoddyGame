@@ -31,7 +31,7 @@ public class DialogueManager : MonoBehaviour
     FadeInOutManager FadeManager;
     public bool isDialogue = false; // 대화가 진행중인지
     public int count = 0; //대사가 얼마나 진행되었는지
-    [SerializeField] private Dialogue[] log;
+    public Dialogue[] log;
 
     private void Start()
     {
@@ -109,6 +109,16 @@ public class DialogueManager : MonoBehaviour
         Selection2.gameObject.SetActive(_flag);
         Time.timeScale = 1f;
         count = 0;
+    }
+
+    // log 배열의 크기를 동적으로 변경하는 함수
+    public void SetLogLength(int length)
+    {
+        log = new Dialogue[length];
+        for (int i = 0; i < length; i++)
+        {
+            log[i] = new Dialogue();
+        }
     }
 
     private void NextDialogue()

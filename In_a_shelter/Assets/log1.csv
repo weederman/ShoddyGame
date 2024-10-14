@@ -1,7 +1,7 @@
-﻿num,name,dialouge,is selection,selection dialouge,happiness
-0,npc,"아, 안녕…",0,,
+﻿num,name,dialogue,is_selection,selection_dialouge,happiness
+0,npc,"아 안녕…",0,,
 ,,혹시… 배급 더 늘려줄 수 있어?,0,,
-,,너무 배고파…,1,,
+,,너무 배고파…,1,,s
 ,player,,,당연하지! 우리 먹을거 많아!,10
 ,,,,"안돼, 굶어",-10
 1,player,무슨 일 있어? 표정이 안좋은데…,0,,

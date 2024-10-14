@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 7998852684781010208}
   - component: {fileID: 7542749678624943031}
   - component: {fileID: 8850437664383026285}
-  - component: {fileID: 410801664947784418}
+  - component: {fileID: 1844337276050664734}
+  - component: {fileID: 1978519537431270582}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -199,16 +200,30 @@ MonoBehaviour:
   txt_title: {fileID: 0}
   txt_selection1: {fileID: 0}
   txt_selection2: {fileID: 0}
+  isDialogue: 0
+  count: 0
   log:
-  - dialogue: "\uC548\uB155? \uC88B\uC740\uC544\uCE68\uC774\uC57C."
+  - dialogue: 
     title: 
     selection1Text: 
     selection2Text: 
-  - dialogue: "\uB098 \uBC30\uACE0\uD508\uB370..."
+  - dialogue: 
     title: 
-    selection1Text: "\uBC25\uBA39\uC790"
-    selection2Text: "\uC548\uB3FC \uAD76\uC5B4"
---- !u!114 &410801664947784418
+    selection1Text: 
+    selection2Text: 
+  - dialogue: 
+    title: 
+    selection1Text: 
+    selection2Text: 
+  - dialogue: 
+    title: 
+    selection1Text: 
+    selection2Text: 
+  - dialogue: 
+    title: 
+    selection1Text: 
+    selection2Text: 
+--- !u!114 &1844337276050664734
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,13 +232,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 6919970771420727186}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd1b5c074233fa349b265b4ac986c5bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 244bbb6d06a74624fabd59c96376d7c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cvsFileName: log1.csv
+--- !u!114 &1978519537431270582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6919970771420727186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4db66746c7ceea49950f7bd72f8dcda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   logManager: {fileID: 8850437664383026285}
   targetObject: {fileID: 0}
   f_Img: {fileID: 8284943817746599967}
   radius: 2
+  event_issued: 0
+  reader: {fileID: 1844337276050664734}
+  log: []
 --- !u!1 &8284943817746599967
 GameObject:
   m_ObjectHideFlags: 0

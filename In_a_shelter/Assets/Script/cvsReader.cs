@@ -3,71 +3,63 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-[System.Serializable]
-public class log
+public class cvsReader : MonoBehaviour
 {
-    public string num;
-    public string name;
-    public string dialouge;
-    public string is_selection;
-    public string selection_dialouge;
-    public string happiness;
-}
+    public string cvsFileName; // Inspector에서 CSV 파일 이름을 할당
+    public List<Dictionary<string, object>> data_RandomChat = new List<Dictionary<string, object>>();
 
-    public class cvsReader : MonoBehaviour
+    private void Start()
     {
-        public string cvsFileName; // Inspector에서 할당할 CSV 파일 이름
-        public Dictionary<int, log> randomChat = new Dictionary<int, log>(); // 행 번호로 관리하는 Dictionary
-
-        private int rowCount = 0; // CSV 파일의 총 행 수
-
-        private void Start()
-        {
-            ReadCSV();
-        }
-
-        // CSV 파일을 읽어오는 메서드
-        private void ReadCSV()
-        {
-            string path = cvsFileName;
-            StreamReader reader = new StreamReader(Application.dataPath + "/" + path);
-            bool isFinish = false;
-
-            // 첫 줄(헤더)을 무시하는 코드 (선택사항)
-            reader.ReadLine();
-
-            while (!isFinish)
-            {
-                string data = reader.ReadLine();
-                if (data == null)
-                {
-                    isFinish = true;
-                    break;
-                }
-
-                var splitData = data.Split(',');
-
-                // splitData의 길이가 최소한 6 이상인지 확인 (num, name, dialogue, is_selection, selection_dialouge, happiness)
-                if (splitData.Length < 6)
-                {
-                    Debug.LogError("Invalid data format. Expected 6 columns but got fewer.");
-                    continue; // 이 줄을 건너뜁니다.
-                }
-
-                // log 인스턴스 생성
-                log logEntry = new log
-                {
-                    num = splitData[0],
-                    name = splitData[1],
-                    dialouge = splitData[2],
-                    is_selection = splitData[3],
-                    selection_dialouge = splitData[4],
-                    happiness = splitData[5]
-                };
-
-                // randomChat에 추가
-                randomChat.Add(rowCount, logEntry);
-                rowCount++;
-            }
-        }
+        ReadCSV();
     }
+
+    // 파일을 읽어오는 메서드
+    private void ReadCSV()
+    {
+        string path = Application.dataPath + "/" + cvsFileName;
+
+        // StreamReader로 파일 읽기
+        Debug.Log("CSV 파일 경로: " + path);
+        StreamReader reader = new StreamReader(path);
+
+        // 첫 번째 줄(헤더) 읽기
+        string headerLine = reader.ReadLine();
+        if (string.IsNullOrEmpty(headerLine))
+        {
+            Debug.LogError("헤더가 비어 있습니다.");
+            return;
+        }
+
+        // 헤더 분리
+        var headers = headerLine.Split(',');
+
+        // 각 줄을 읽어 Dictionary에 저장
+        bool isFinish = false;
+
+        while (!isFinish)
+        {
+            string dataLine = reader.ReadLine(); // 한 줄 읽기
+
+            if (dataLine == null)
+            {
+                // 마지막 줄이면 반복문 탈출
+                isFinish = true;
+                break;
+            }
+
+            var splitData = dataLine.Split(','); // 데이터 파싱
+
+            // 새로운 Dictionary 생성 및 데이터 추가
+            var entry = new Dictionary<string, object>();
+            for (int i = 0; i < headers.Length; i++)
+            {
+                entry[headers[i]] = splitData[i].Trim(); // 헤더를 키로 사용
+            }
+
+            // List에 Dictionary 추가
+            data_RandomChat.Add(entry);
+        }
+
+        reader.Close();
+    }
+}
