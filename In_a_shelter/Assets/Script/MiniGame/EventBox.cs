@@ -8,7 +8,7 @@ public class EventBox : MonoBehaviour
     public GameObject interactionKeyImage; // F 키 이미지를 위한 UI Image
     public GameObject miniGamePanel; // 미니게임 패널
     private bool isPlayerInRange = false; // 플레이어가 범위 내에 있는지 확인
-
+    public Texture2D cursor;
     void Start()
     {
         // 자식 오브젝트에서 F 키 이미지를 찾음
@@ -25,6 +25,7 @@ public class EventBox : MonoBehaviour
             Time.timeScale = 0;
             // 미니게임 패널 활성화
             miniGamePanel.SetActive(true);
+            Cursor.SetCursor(cursor, new Vector2(0, 0), 0);
         }
     }
 
