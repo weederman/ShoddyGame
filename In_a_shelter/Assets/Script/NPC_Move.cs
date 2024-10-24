@@ -1,94 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UIElements.Experimental;
 
 public class NPC_Move : MonoBehaviour
 {
-    public float moveSpeed = 2f;   // NPC 이동 속도
-    public float moveTime;         // NPC가 한 방향으로 이동하는 시간
-    public float waitTime;         // NPC가 대기하는 시간
+    private GameObject player; // 플레이어 객체
+    private NavMeshAgent agent; // NavMeshAgent 참조
 
-    private Vector2 movementDirection;
-    private bool isMoving = false;
-
-    // 좌측 상단과 우측 하단 오브젝트의 Transform
-    public Transform topLeftBoundary;   // 좌측 상단의 위치
-    public Transform bottomRightBoundary; // 우측 하단의 위치
-
-    private Vector2 centerPosition;  // 범위 중앙 위치
-
+    public float roamRadius = 5f; // 배회 반경
+    public float moveInterval = 2f; // 이동 간격 (초)
+    private Vector3 roamTarget; // 배회할 목표 위치
     void Start()
     {
-        // 범위 중앙 좌표 계산
-        topLeftBoundary = GameObject.Find("TopLeft").transform;
-        bottomRightBoundary = GameObject.Find("BottomRight").transform;
-        centerPosition = new Vector2(
-            (topLeftBoundary.position.x + bottomRightBoundary.position.x) / 2,
-            (topLeftBoundary.position.y + bottomRightBoundary.position.y) / 2
-        );
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
 
-        StartCoroutine(MoveNPC());
+        player = GameObject.FindWithTag("Player"); // 태그로 플레이어 찾기
+
+        StartCoroutine(RoamCoroutine());
     }
-
-    void Update()
-    {
-        if (isMoving)
-        {
-            transform.Translate(movementDirection * moveSpeed * Time.deltaTime);
-
-            // NPC가 범위를 벗어났는지 체크
-            if (!IsWithinBounds(transform.position))
-            {
-                // 범위를 벗어나면 중앙 근처로 이동
-                StartCoroutine(ReturnToCenter());
-            }
-        }
-    }
-
-    IEnumerator MoveNPC()
+    IEnumerator RoamCoroutine()
     {
         while (true)
         {
-            if (!isMoving)
-            {
-                // NPC가 랜덤한 방향으로 이동
-                movementDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
-                isMoving = true;
-                moveTime = Random.Range(0, 5f);
+            // 배회 목표 설정 및 이동
+            yield return new WaitForSeconds(Random.Range(1f, moveInterval)); // 이동 간격만큼 대기
+            agent.SetDestination(roamTarget);
 
-                yield return new WaitForSeconds(moveTime);
-                isMoving = false;
-
-                waitTime = Random.Range(0, 5f);
-                yield return new WaitForSeconds(waitTime);
-            }
+            SetRoamTarget(); // 새로운 목표 설정
         }
     }
-
-    // 범위 안에 있는지 확인하는 함수
-    bool IsWithinBounds(Vector2 position)
+    void SetRoamTarget()
     {
-        return position.x >= topLeftBoundary.position.x && position.x <= bottomRightBoundary.position.x &&
-               position.y <= topLeftBoundary.position.y && position.y >= bottomRightBoundary.position.y;
-    }
-
-    // NPC가 범위를 벗어났을 때 중앙으로 이동하는 코루틴
-    IEnumerator ReturnToCenter()
-    {
-        isMoving = false;  // 이동을 중단
-        Vector2 directionToCenter = (centerPosition - (Vector2)transform.position).normalized;
-
-        // 중앙으로 일정 시간 동안 이동
-        float returnTime = 1f;  // 중앙으로 이동하는 데 걸리는 시간
-        float elapsedTime = 0f;
-
-        while (elapsedTime < returnTime)
-        {
-            transform.Translate(directionToCenter * moveSpeed * Time.deltaTime);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        isMoving = false;
+        // 배회할 무작위 목표 설정
+        float randomX = Random.Range(-roamRadius, roamRadius);
+        float randomY = Random.Range(-roamRadius, roamRadius);
+        roamTarget = new Vector3(transform.position.x + randomX, transform.position.y + randomY, transform.position.z);
     }
 }
