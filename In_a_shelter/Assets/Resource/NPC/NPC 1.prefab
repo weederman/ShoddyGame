@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1978519537431270582}
   - component: {fileID: 4755886644855283996}
   m_Layer: 0
-  m_Name: NPC
+  m_Name: NPC 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 743d9912fd4023441afc1a7a8034b6f9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b121b2f93697070478f7b9ff1b185f8c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
