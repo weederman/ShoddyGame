@@ -866,19 +866,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4c49afaa8a2920b479bdbc0794b734d4, type: 3}
   - {fileID: 21300000, guid: 9ce8bb976210f4b458794cb1993473c4, type: 3}
   reader: {fileID: 1391546135}
-  storyTxt:
-  - CharacterImg: {fileID: 21300000, guid: 169890e1144f3c645929c6bb15fe60fe, type: 3}
-    BGImg: {fileID: 21300000, guid: 55c11da84ba17be439933116691b534c, type: 3}
-  - CharacterImg: {fileID: 21300000, guid: 169890e1144f3c645929c6bb15fe60fe, type: 3}
-    BGImg: {fileID: 21300000, guid: 9ce8bb976210f4b458794cb1993473c4, type: 3}
-  - CharacterImg: {fileID: 21300000, guid: 169890e1144f3c645929c6bb15fe60fe, type: 3}
-    BGImg: {fileID: 21300000, guid: 9ce8bb976210f4b458794cb1993473c4, type: 3}
-  - CharacterImg: {fileID: 21300000, guid: 169890e1144f3c645929c6bb15fe60fe, type: 3}
-    BGImg: {fileID: 21300000, guid: 9ce8bb976210f4b458794cb1993473c4, type: 3}
-  - CharacterImg: {fileID: 21300000, guid: 169890e1144f3c645929c6bb15fe60fe, type: 3}
-    BGImg: {fileID: 21300000, guid: 9ce8bb976210f4b458794cb1993473c4, type: 3}
-  - CharacterImg: {fileID: 21300000, guid: 169890e1144f3c645929c6bb15fe60fe, type: 3}
-    BGImg: {fileID: 21300000, guid: 9ce8bb976210f4b458794cb1993473c4, type: 3}
 --- !u!114 &1391546135
 MonoBehaviour:
   m_ObjectHideFlags: 0
