@@ -3,15 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class StoryTxt
-{
-    [TextArea]
-    public string Text;
-    public string Title;
-    public Sprite CharacterImg;
-    public Sprite BGImg;
-}
 
 public class StoryTxtManager : MonoBehaviour
 {
@@ -21,15 +12,20 @@ public class StoryTxtManager : MonoBehaviour
     [SerializeField] private Text T_title;
     [SerializeField] private Text T_txt;
 
+    public Sprite[] CharacterImg;
+    public Sprite[] BGImg;
+    public cvsReader reader;
+    public List<Dictionary<string, object>> chat { get; private set; }
+
     private bool isDialogue = false;
     private int count = 0;
     private bool isTyping = false;
     private bool canSkip = false;
 
-    [SerializeField] private StoryTxt[] storyTxt;
 
     private void Start()
     {
+        chat = reader.data_Chat;
         ShowDialogue();
     }
 
@@ -50,12 +46,20 @@ public class StoryTxtManager : MonoBehaviour
 
     private void NextDialogue()
     {
-        T_title.text = storyTxt[count].Title;
-        Sp_Character.sprite = storyTxt[count].CharacterImg;
-        Sp_BG.sprite = storyTxt[count].BGImg;
-        StartCoroutine(TypeText(storyTxt[count].Text));
+        T_title.text = chat[count]["name"].ToString();
+
+        int.TryParse(chat[count]["CharacterID"].ToString(), out int characterID );
+        int.TryParse(chat[count]["BGID"].ToString(), out int bgID);
+        Debug.Log($"{count} 줄 캐릭터ID: {characterID}, 배경ID: {bgID}");
+
+        Sp_Character.sprite = CharacterImg[characterID];
+        Sp_BG.sprite = BGImg[bgID];
+
+        StartCoroutine(TypeText(chat[count]["dialogue"].ToString()));
         count++;
     }
+
+
 
     private IEnumerator TypeText(string text)
     {
@@ -90,7 +94,7 @@ public class StoryTxtManager : MonoBehaviour
                     return;
                 }
 
-                if (count < storyTxt.Length)
+                if (count < chat.Count)
                 {
                     StartCoroutine(WaitAndNextDialogue(0.2f)); // 0.2초 후에 다음 대사로
                 }
