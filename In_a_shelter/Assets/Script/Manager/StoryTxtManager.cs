@@ -16,29 +16,18 @@ public class StoryTxtManager : MonoBehaviour
     public cvsReader reader;
     public static StoryTxtManager instance;
     public List<Dictionary<string, object>> chat { get; private set; }
+    public string cvsFileName; // Inspectorì—ì„œ CSV íŒŒì¼ ì´ë¦„ì„ í• ë‹¹
 
     private bool isDialogue = false;
     private int count = 0;
     private bool isTyping = false;
     private bool canSkip = false;
-    private bool isInputBlocked = false; // ÀÔ·Â Â÷´Ü »óÅÂ¸¦ °ü¸®ÇÏ´Â º¯¼ö
+    private bool isInputBlocked = false; // ì…ë ¥ ì°¨ë‹¨ ìƒíƒœë¥¼ ê´€ë¦¬í•˜ëŠ” ë³€ìˆ˜
 
     private void Start()
     {
-        reader = gameObject.GetComponent<cvsReader>();
-        instance = this;
-    }
 
-    public void ASDF(List<Dictionary<string, object>> a)
-    {
-        chat = a;
-        if (a.Count >= 0)
-        {
-            foreach (var kvp in a[0])
-            {
-                Debug.Log(kvp.Key);
-            }
-        }
+        chat = reader.ReadCSV(cvsFileName);
         ShowDialogue();
     }
 
@@ -59,13 +48,13 @@ public class StoryTxtManager : MonoBehaviour
 
     private void NextDialogue()
     {
-        if (count >= chat.Count) return; // ´ëÈ­°¡ ³¡³µÀ» ¶§ Ãß°¡ÀûÀÎ Ã³¸®¸¦ ¹æÁö
+        if (count >= chat.Count) return; // ëŒ€í™”ê°€ ëë‚¬ì„ ë•Œ ì¶”ê°€ì ì¸ ì²˜ë¦¬ë¥¼ ë°©ì§€
 
         T_title.text = chat[count]["name"].ToString();
 
         int.TryParse(chat[count]["CharacterID"].ToString(), out int characterID);
         int.TryParse(chat[count]["BGID"].ToString(), out int bgID);
-        Debug.Log($"{count} ÁÙ Ä³¸¯ÅÍID: {characterID}, ¹è°æID: {bgID}");
+        Debug.Log($"{count} ì¤„ ìºë¦­í„°ID: {characterID}, ë°°ê²½ID: {bgID}");
 
         Sp_Character.sprite = CharacterImg[characterID];
         Sp_BG.sprite = BGImg[bgID];
@@ -84,7 +73,7 @@ public class StoryTxtManager : MonoBehaviour
             T_txt.text += letter;
             yield return new WaitForSeconds(0.05f);
 
-            if (canSkip)  // ½ºÆäÀÌ½º¹Ù°¡ ´­¸®¸é ÅØ½ºÆ® Áï½Ã ¿Ï·á
+            if (canSkip)  // ìŠ¤í˜ì´ìŠ¤ë°”ê°€ ëˆŒë¦¬ë©´ í…ìŠ¤íŠ¸ ì¦‰ì‹œ ì™„ë£Œ
             {
                 T_txt.text = text;
                 break;
@@ -97,11 +86,11 @@ public class StoryTxtManager : MonoBehaviour
 
     void Update()
     {
-        if (isDialogue && !isInputBlocked) // ÀÔ·ÂÀÌ Â÷´ÜµÇÁö ¾ÊÀº °æ¿ì¸¸ Ã³¸®
+        if (isDialogue && !isInputBlocked) // ì…ë ¥ì´ ì°¨ë‹¨ë˜ì§€ ì•Šì€ ê²½ìš°ë§Œ ì²˜ë¦¬
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (isTyping) // Å¸ÀÌÇÎ ÁßÀÏ ¶§ ½ºÆäÀÌ½º¹Ù°¡ ´­¸®¸é ÅØ½ºÆ®¸¦ ¿Ï·á
+                if (isTyping) // íƒ€ì´í•‘ ì¤‘ì¼ ë•Œ ìŠ¤í˜ì´ìŠ¤ë°”ê°€ ëˆŒë¦¬ë©´ í…ìŠ¤íŠ¸ë¥¼ ì™„ë£Œ
                 {
                     canSkip = true;
                     return;
@@ -109,7 +98,7 @@ public class StoryTxtManager : MonoBehaviour
 
                 if (count < chat.Count)
                 {
-                    StartCoroutine(BlockInputForSeconds(0.2f)); // 0.2ÃÊ µ¿¾È ÀÔ·Â Â÷´Ü
+                    StartCoroutine(BlockInputForSeconds(0.2f)); // 0.2ì´ˆ ë™ì•ˆ ì…ë ¥ ì°¨ë‹¨
                     NextDialogue();
                 }
                 else
@@ -122,8 +111,8 @@ public class StoryTxtManager : MonoBehaviour
 
     private IEnumerator BlockInputForSeconds(float seconds)
     {
-        isInputBlocked = true; // ÀÔ·Â Â÷´Ü
-        yield return new WaitForSeconds(seconds); // ´ë±â
-        isInputBlocked = false; // ÀÔ·Â Çã¿ë
+        isInputBlocked = true; // ì…ë ¥ ì°¨ë‹¨
+        yield return new WaitForSeconds(seconds); // ëŒ€ê¸°
+        isInputBlocked = false; // ì…ë ¥ í—ˆìš©
     }
 }
