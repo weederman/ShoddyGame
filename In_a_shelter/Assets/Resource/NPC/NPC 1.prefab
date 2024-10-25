@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1844337276050664734}
   - component: {fileID: 1978519537431270582}
   - component: {fileID: 4755886644855283996}
+  - component: {fileID: -4739588132251267895}
   m_Layer: 0
   m_Name: NPC 1
   m_TagString: Untagged
@@ -228,6 +229,27 @@ NavMeshAgent:
   m_BaseOffset: 2.52
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &-4739588132251267895
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6919970771420727186}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ca41ee768c124824d9530a0a3a8de57c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8284943817746599967
 GameObject:
   m_ObjectHideFlags: 0
