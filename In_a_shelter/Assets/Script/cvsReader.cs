@@ -6,7 +6,7 @@ using UnityEngine;
 public class cvsReader : MonoBehaviour
 {
     public string cvsFileName; // Inspector에서 CSV 파일 이름을 할당
-    public List<Dictionary<string, object>> data_RandomChat = new List<Dictionary<string, object>>();
+    public List<Dictionary<string, object>> data_Chat = new List<Dictionary<string, object>>();
 
     private void Start()
     {
@@ -47,19 +47,24 @@ public class cvsReader : MonoBehaviour
                 break;
             }
 
+            
             var splitData = dataLine.Split(','); // 데이터 파싱
+            
 
             // 새로운 Dictionary 생성 및 데이터 추가
             var entry = new Dictionary<string, object>();
             for (int i = 0; i < headers.Length; i++)
             {
-                entry[headers[i]] = splitData[i].Trim(); // 헤더를 키로 사용
+                entry[headers[i]] = splitData[i].Replace("%", ",").Trim(); // 헤더를 키로 사용
             }
 
             // List에 Dictionary 추가
-            data_RandomChat.Add(entry);
+            data_Chat.Add(entry);
+
         }
 
         reader.Close();
+
+        StoryTxtManager.instance.ASDF(data_Chat);
     }
 }

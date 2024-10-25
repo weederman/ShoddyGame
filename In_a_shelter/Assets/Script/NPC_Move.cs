@@ -10,7 +10,7 @@ public class NPC_Move : MonoBehaviour
     private NavMeshAgent agent; // NavMeshAgent 참조
 
     public float roamRadius = 5f; // 배회 반경
-    public float moveInterval = 2f; // 이동 간격 (초)
+    public float moveInterval = 5f; // 이동 간격 (초)
     private Vector3 roamTarget; // 배회할 목표 위치
     void Start()
     {

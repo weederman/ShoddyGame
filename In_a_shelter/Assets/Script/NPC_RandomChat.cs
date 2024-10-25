@@ -25,7 +25,7 @@ public class NPC_RandomChat : MonoBehaviour
 
         // 초기 대화 내용 설정
         count = logManager.count;
-        rand_chat = reader.data_RandomChat;
+        rand_chat = reader.data_Chat;
 
         // num 리스트 업데이트
         UpdateNumList();
