@@ -6,7 +6,7 @@ public class ZombieManager : MonoBehaviour
 {
     private static ZombieManager instance; // 싱글톤 인스턴스
     private List<Zombie> zombies = new List<Zombie>(); // 모든 좀비를 저장하는 리스트
-
+    public bool chasing = false;
     public static ZombieManager Instance
     {
         get
@@ -45,6 +45,7 @@ public class ZombieManager : MonoBehaviour
     {
         foreach (var zombie in zombies)
         {
+            chasing = true;
             zombie.SetChasing(true, duration); // 모든 좀비를 쫓도록 설정
         }
     }
