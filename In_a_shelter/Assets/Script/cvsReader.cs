@@ -60,8 +60,11 @@ public class cvsReader : MonoBehaviour
 
             // List¿¡ Dictionary Ãß°¡
             data_Chat.Add(entry);
+
         }
 
         reader.Close();
+
+        StoryTxtManager.instance.ASDF(data_Chat);
     }
 }

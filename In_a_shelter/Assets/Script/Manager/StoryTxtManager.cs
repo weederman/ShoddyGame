@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class StoryTxtManager : MonoBehaviour
 {
     [SerializeField] private Image Sp_Character;
@@ -15,17 +14,31 @@ public class StoryTxtManager : MonoBehaviour
     public Sprite[] CharacterImg;
     public Sprite[] BGImg;
     public cvsReader reader;
+    public static StoryTxtManager instance;
     public List<Dictionary<string, object>> chat { get; private set; }
 
     private bool isDialogue = false;
     private int count = 0;
     private bool isTyping = false;
     private bool canSkip = false;
-
+    private bool isInputBlocked = false; // 입력 차단 상태를 관리하는 변수
 
     private void Start()
     {
-        chat = reader.data_Chat;
+        reader = gameObject.GetComponent<cvsReader>();
+        instance = this;
+    }
+
+    public void ASDF(List<Dictionary<string, object>> a)
+    {
+        chat = a;
+        if (a.Count >= 0)
+        {
+            foreach (var kvp in a[0])
+            {
+                Debug.Log(kvp.Key);
+            }
+        }
         ShowDialogue();
     }
 
@@ -46,9 +59,11 @@ public class StoryTxtManager : MonoBehaviour
 
     private void NextDialogue()
     {
+        if (count >= chat.Count) return; // 대화가 끝났을 때 추가적인 처리를 방지
+
         T_title.text = chat[count]["name"].ToString();
 
-        int.TryParse(chat[count]["CharacterID"].ToString(), out int characterID );
+        int.TryParse(chat[count]["CharacterID"].ToString(), out int characterID);
         int.TryParse(chat[count]["BGID"].ToString(), out int bgID);
         Debug.Log($"{count} 줄 캐릭터ID: {characterID}, 배경ID: {bgID}");
 
@@ -58,8 +73,6 @@ public class StoryTxtManager : MonoBehaviour
         StartCoroutine(TypeText(chat[count]["dialogue"].ToString()));
         count++;
     }
-
-
 
     private IEnumerator TypeText(string text)
     {
@@ -84,7 +97,7 @@ public class StoryTxtManager : MonoBehaviour
 
     void Update()
     {
-        if (isDialogue)
+        if (isDialogue && !isInputBlocked) // 입력이 차단되지 않은 경우만 처리
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -96,7 +109,8 @@ public class StoryTxtManager : MonoBehaviour
 
                 if (count < chat.Count)
                 {
-                    StartCoroutine(WaitAndNextDialogue(0.2f)); // 0.2초 후에 다음 대사로
+                    StartCoroutine(BlockInputForSeconds(0.2f)); // 0.2초 동안 입력 차단
+                    NextDialogue();
                 }
                 else
                 {
@@ -106,9 +120,10 @@ public class StoryTxtManager : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitAndNextDialogue(float waitTime)
+    private IEnumerator BlockInputForSeconds(float seconds)
     {
-        yield return new WaitForSeconds(waitTime);
-        NextDialogue();
+        isInputBlocked = true; // 입력 차단
+        yield return new WaitForSeconds(seconds); // 대기
+        isInputBlocked = false; // 입력 허용
     }
 }
