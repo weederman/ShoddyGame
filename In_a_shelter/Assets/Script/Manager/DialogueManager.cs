@@ -130,13 +130,14 @@ public class DialogueManager : MonoBehaviour
     {
         if (isDialogue)
         {
-            if (isSelection && !(count < log.Length))//선택지가 존재하는 대화창이고, 대화가 끝났을 경우 선택버튼 표시
+            if (isSelection)//선택지가 존재하는 대화창이고, 대화가 끝났을 경우 선택버튼 표시
             {
                 Text Selection1Text = Selection1.GetComponentInChildren<Text>();
                 Text Selection2Text = Selection2.GetComponentInChildren<Text>();
                 Selection1Text.text = log[count - 1].selection1Text;
                 Selection2Text.text = log[count - 1].selection2Text;
                 Selection1.gameObject.SetActive(true);
+                Debug.Log("버튼 하나 생성");
                 Selection2.gameObject.SetActive(true);
             }
             else {//선택지가 없는 대화창일 경우
