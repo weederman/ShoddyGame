@@ -21,6 +21,7 @@ public class NPC_RandomChat : MonoBehaviour
     {
         targetObject = GameObject.Find("Player");
         tmp_surv_day = GameManager.Instance.survivalDays;
+        logManager = GetComponent<DialogueManager>();
 
         // 초기 대화 내용 설정
         count = logManager.count;
@@ -28,9 +29,6 @@ public class NPC_RandomChat : MonoBehaviour
 
         // num 리스트 업데이트
         UpdateNumList();
-
-        // 처음 데이터를 CSV에서 불러와 log에 반영
-        UpdateDialogueFromChat();
     }
 
     void Update()
@@ -40,7 +38,6 @@ public class NPC_RandomChat : MonoBehaviour
         {
             event_issued = false;
             tmp_surv_day = GameManager.Instance.survivalDays;
-            UpdateDialogueFromChat(); // 새로운 날에 대화 내용을 업데이트
         }
 
         insideBox();  // 반경 체크
@@ -58,6 +55,7 @@ public class NPC_RandomChat : MonoBehaviour
             // F를 누르면 이벤트 발생
             if (Input.GetKeyDown(KeyCode.F) && !logManager.isDialogue)
             {
+                UpdateDialogueFromChat();
                 logManager.ShowDialogue(this.gameObject.name);
             }
         }
@@ -78,41 +76,38 @@ public class NPC_RandomChat : MonoBehaviour
 
         // 랜덤하게 num 값을 선택
         int randomNum = Random.Range(0, numList.Count);
-        int selectedNum = numList[randomNum];
 
         // 선택된 num 값과 일치하는 대화 묶음을 가져옴
-        List<Dictionary<string, object>> selectedDialogueGroup = GetDialogueGroupByNum(selectedNum);
-
+        List<Dictionary<string, object>> selectedDialogueGroup = GetDialogueGroupByNum(randomNum);
+        Debug.Log($"현재 선택된 대화 `{randomNum}` 그룹 길이`{selectedDialogueGroup.Count}`");
+       
         // logManager의 log 크기를 CSV 데이터 크기에 맞춰 동적으로 변경
         logManager.SetLogLength(selectedDialogueGroup.Count);
+            
 
         // DialogueManager의 log와 isSelection을 업데이트
         for (int i = 0; i < selectedDialogueGroup.Count; i++)
         {
             logManager.log[i].title = (string)selectedDialogueGroup[i]["name"];         // CSV의 "name" 필드
             logManager.log[i].dialogue = (string)selectedDialogueGroup[i]["dialogue"];   // CSV의 "dialogue" 필드
-            logManager.log[i].selection1Text = (string)selectedDialogueGroup[i]["selection_dialouge"]; // CSV의 선택지1 필드
+            logManager.log[i].selection1Text = (string)selectedDialogueGroup[i]["selection1"]; // CSV의 선택지1 필드
+            logManager.log[i].selection2Text = (string)selectedDialogueGroup[i]["selection2"]; // CSV의 선택지2 필드
+            Debug.Log($"두번째 선택지 대사: {logManager.log[i].selection2Text}");
+
 
             // CSV의 is_selection 값을 DialogueManager의 isSelection에 반영
-            if (selectedDialogueGroup[i].ContainsKey("is_selection"))
-            {
                 string isSelectionStr = selectedDialogueGroup[i]["is_selection"].ToString();
 
                 // bool 값으로 안전하게 변환
                 if (bool.TryParse(isSelectionStr, out bool isSelection))
                 {
+                    Debug.Log($"{randomNum} 대화 {i}번째 isSelelction값: {isSelection}");
                     logManager.isSelection = isSelection;
                 }
                 else
                 {
                     Debug.LogError($"'is_selection' 필드 값 '{isSelectionStr}'는 유효한 bool 값이 아닙니다.");
                 }
-            }
-
-            if (i + 1 < selectedDialogueGroup.Count)
-            {
-                logManager.log[i].selection2Text = (string)selectedDialogueGroup[i + 1]["selection_dialouge"]; // CSV의 선택지2 필드
-            }
         }
 
         Debug.Log("대화 내용 업데이트 완료");
@@ -140,24 +135,29 @@ public class NPC_RandomChat : MonoBehaviour
                 }
             }
         }
+        Debug.Log(numList.Count);
     }
 
-    // 주어진 num 값에 해당하는 대화 묶음 반환
     private List<Dictionary<string, object>> GetDialogueGroupByNum(int num)
     {
         List<Dictionary<string, object>> selectedGroup = new List<Dictionary<string, object>>();
+        int currentNum = -1; // 마지막으로 찾은 num 값을 추적하는 변수
 
         foreach (var chat in rand_chat)
         {
-            if (chat.ContainsKey("num"))
+            if (chat.ContainsKey("num") && int.TryParse(chat["num"].ToString(), out int chatNum))
             {
-                if (int.TryParse(chat["num"].ToString(), out int chatNum) && chatNum == num)
-                {
-                    selectedGroup.Add(chat); // num 값이 일치하는 대화들을 그룹에 추가
-                }
+                currentNum = chatNum; // 새 num 값이 발견되면 currentNum을 업데이트
+            }
+
+            // currentNum이 찾고자 하는 num 값과 일치할 때만 추가
+            if (currentNum == num)
+            {
+                selectedGroup.Add(chat);
             }
         }
-
         return selectedGroup;
     }
+
 }
+

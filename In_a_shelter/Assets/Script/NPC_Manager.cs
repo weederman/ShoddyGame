@@ -45,7 +45,7 @@ public class NPC_Manager : MonoBehaviour
     */
     void SpawnNpc()
     {
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < npcs.Length; i++)
         {
             if (GameManager.Instance.NPC[i])
             {
