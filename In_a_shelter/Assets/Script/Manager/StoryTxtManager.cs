@@ -16,6 +16,7 @@ public class StoryTxtManager : MonoBehaviour
     public Sprite[] BGImg;
     public cvsReader reader;
     public List<Dictionary<string, object>> chat { get; private set; }
+    public string cvsFileName; // Inspector에서 CSV 파일 이름을 할당
 
     private bool isDialogue = false;
     private int count = 0;
@@ -25,7 +26,7 @@ public class StoryTxtManager : MonoBehaviour
 
     private void Start()
     {
-        chat = reader.data_Chat;
+        chat = reader.ReadCSV(cvsFileName);
         ShowDialogue();
     }
 

@@ -11,6 +11,7 @@ public class NPC_RandomChat : MonoBehaviour
     public bool event_issued = false;
     int tmp_surv_day;
     public cvsReader reader;  // CSVReader를 통해 데이터를 불러옴
+    public string cvsFileName; // Inspector에서 CSV 파일 이름을 할당
     int count;
     public List<Dictionary<string, object>> rand_chat { get; private set; }
 
@@ -22,6 +23,8 @@ public class NPC_RandomChat : MonoBehaviour
         targetObject = GameObject.Find("Player");
         tmp_surv_day = GameManager.Instance.survivalDays;
         logManager = GetComponent<DialogueManager>();
+        rand_chat = reader.ReadCSV(cvsFileName);
+        
 
         // 초기 대화 내용 설정
         count = logManager.count;
@@ -90,8 +93,11 @@ public class NPC_RandomChat : MonoBehaviour
         {
             logManager.log[i].title = (string)selectedDialogueGroup[i]["name"];         // CSV의 "name" 필드
             logManager.log[i].dialogue = (string)selectedDialogueGroup[i]["dialogue"];   // CSV의 "dialogue" 필드
-            logManager.log[i].selection1Text = (string)selectedDialogueGroup[i]["selection1"]; // CSV의 선택지1 필드
-            logManager.log[i].selection2Text = (string)selectedDialogueGroup[i]["selection2"]; // CSV의 선택지2 필드
+            logManager.log[i].selection1Text = (string)selectedDialogueGroup[i]["selection_dialogue"]; // CSV의 선택지1 필드
+            if (i < selectedDialogueGroup[i].Count - 1)
+            {
+                logManager.log[i].selection2Text = (string)selectedDialogueGroup[i]["selection_dialogue"]; // CSV의 선택지2 필드
+            }
             Debug.Log($"두번째 선택지 대사: {logManager.log[i].selection2Text}");
 
 

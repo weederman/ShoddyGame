@@ -5,16 +5,10 @@ using UnityEngine;
 
 public class cvsReader : MonoBehaviour
 {
-    public string cvsFileName; // Inspector에서 CSV 파일 이름을 할당
     public List<Dictionary<string, object>> data_Chat = new List<Dictionary<string, object>>();
 
-    private void Start()
-    {
-        ReadCSV();
-    }
-
     // 파일을 읽어오는 메서드
-    private void ReadCSV()
+    public List<Dictionary<string, object>> ReadCSV(string cvsFileName)
     {
         string path = Application.dataPath + "/" + cvsFileName;
 
@@ -27,7 +21,6 @@ public class cvsReader : MonoBehaviour
         if (string.IsNullOrEmpty(headerLine))
         {
             Debug.LogError("헤더가 비어 있습니다.");
-            return;
         }
 
         // 헤더 분리
@@ -63,5 +56,6 @@ public class cvsReader : MonoBehaviour
         }
 
         reader.Close();
+        return data_Chat;
     }
 }
