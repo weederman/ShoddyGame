@@ -55,12 +55,12 @@ public class Zombie : MonoBehaviour
         }
 
         // 애니메이션 처리
-        if (agent.velocity.sqrMagnitude > 0.1f && !walk)
+        if (agent.velocity.sqrMagnitude > 0.01f && !walk)
         {
             walk = true;
             animator.SetBool("Walk", true);  // 걷는 애니메이션 트리거
         }
-        else if (agent.velocity.sqrMagnitude <= 0.1f && walk)
+        else if (agent.velocity.sqrMagnitude <= 0.01f && walk)
         {
             walk = false;
             animator.SetBool("Walk", false);  // 정지 애니메이션 트리거

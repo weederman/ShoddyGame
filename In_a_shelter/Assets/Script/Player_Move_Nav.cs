@@ -14,7 +14,7 @@ public class Player_Move_Nav : MonoBehaviour
     {
         objects = GameObject.FindGameObjectsWithTag("Obstacle");
         playerRenderer = this.GetComponent<SpriteRenderer>();
-        Debug.Log(objects.Length);
+        //Debug.Log(objects.Length);
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -40,7 +40,7 @@ public class Player_Move_Nav : MonoBehaviour
             if (this.transform.position.y > obj.transform.position.y)
             {
                 playerRenderer.sortingOrder = objectRenderer.sortingOrder - 1;
-                Debug.Log(obj.name);
+                //Debug.Log(obj.name);
             }
             else
             {

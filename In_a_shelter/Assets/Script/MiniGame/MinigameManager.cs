@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class MinigameManager : MonoBehaviour
 {
-    public GameObject eventBoxPrefab; // Event Box 프리팹
+    public List<GameObject> spawnablePrefabs; // 스폰 가능한 프리팹 리스트
     public List<GameObject> miniGamePanelPrefabs; // 미니게임 패널 프리팹 리스트
-    public int numberOfEventBoxes = 5; // 생성할 Event Box 개수
-    public Vector2 spawnAreaMin; // 스폰 영역 최소 좌표
-    public Vector2 spawnAreaMax; // 스폰 영역 최대 좌표
+    public int numberOfEventBoxes = 5; // 생성할 오브젝트 개수
+    public List<Vector2> spawnPositions; // 미리 지정된 스폰 위치 리스트
     private Canvas mainCanvas; // UI 캔버스
+    public Transform parentObject; // 스폰될 부모 오브젝트
 
     void Start()
     {
-        // Scene에 있는 Canvas를 찾습니다.
         mainCanvas = FindObjectOfType<Canvas>();
+        //parentObject = GameObject.Find("Object").transform; // "object" 오브젝트를 부모로 설정
         SpawnEventBoxes();
     }
 
@@ -22,25 +22,52 @@ public class MinigameManager : MonoBehaviour
     {
         for (int i = 0; i < numberOfEventBoxes; i++)
         {
-            Vector2 randomPosition = new Vector2(
-                Random.Range(spawnAreaMin.x, spawnAreaMax.x),
-                Random.Range(spawnAreaMin.y, spawnAreaMax.y)
-            );
+            Vector2 selectedLocalPosition = spawnPositions[i];
+            Vector3 selectedWorldPosition = parentObject.TransformPoint(selectedLocalPosition); // 로컬 좌표를 월드 좌표로 변환
 
-            GameObject newEventBox = Instantiate(eventBoxPrefab, randomPosition, Quaternion.identity);
+            GameObject selectedPrefab = spawnablePrefabs[Random.Range(0, spawnablePrefabs.Count)];
+            GameObject newSpawnedObject = Instantiate(selectedPrefab, selectedWorldPosition, Quaternion.identity, parentObject);
 
-            // 랜덤한 미니게임 패널을 Canvas의 자식으로 인스턴스화
+            // Y좌표에 따라 Order in Layer 조정 (로컬 좌표로 비교)
+            SetOrderInLayerBasedOnLocalYPosition(newSpawnedObject, selectedLocalPosition);
+
             GameObject selectedMiniGamePanelPrefab = miniGamePanelPrefabs[Random.Range(0, miniGamePanelPrefabs.Count)];
             GameObject miniGamePanelInstance = Instantiate(selectedMiniGamePanelPrefab, mainCanvas.transform);
 
-            // 미니게임 패널 비활성화 및 초기 위치 조정
             miniGamePanelInstance.SetActive(false);
-            miniGamePanelInstance.transform.localPosition = Vector3.zero; // 화면 중앙에 위치
+            miniGamePanelInstance.transform.localPosition = Vector3.zero;
             miniGamePanelInstance.transform.localScale = Vector3.one;
 
-            // EventBox에 미니게임 패널 참조 설정
-            EventBox eventBoxScript = newEventBox.GetComponent<EventBox>();
-            eventBoxScript.miniGamePanel = miniGamePanelInstance;
+            EventBox eventBoxScript = newSpawnedObject.GetComponent<EventBox>();
+            if (eventBoxScript != null)
+            {
+                eventBoxScript.miniGamePanel = miniGamePanelInstance;
+            }
+        }
+    }
+
+    void SetOrderInLayerBasedOnLocalYPosition(GameObject obj, Vector2 localPosition)
+    {
+        SpriteRenderer spriteRenderer = obj.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            float yPosition = localPosition.y; // 로컬 Y좌표 사용
+            if (yPosition >= 13.5f)
+            {
+                spriteRenderer.sortingOrder = 3;
+            }
+            else if (yPosition >= 9f)
+            {
+                spriteRenderer.sortingOrder = 6;
+            }
+            else if (yPosition >= 3f)
+            {
+                spriteRenderer.sortingOrder = 8;
+            }
+            else
+            {
+                spriteRenderer.sortingOrder = 0; // 기본값
+            }
         }
     }
 }
