@@ -19,13 +19,20 @@ public class EventBox : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.F))
+        if (miniGamePanel == null)
         {
-            // 시간을 멈춤
-            Time.timeScale = 0;
-            // 미니게임 패널 활성화
-            miniGamePanel.SetActive(true);
-            Cursor.SetCursor(cursor, new Vector2(0, 0), 0);
+            Destroy(gameObject);
+        }
+        else
+        {
+            if (isPlayerInRange && Input.GetKeyDown(KeyCode.F))
+            {
+                // 시간을 멈춤
+                Time.timeScale = 0;
+                // 미니게임 패널 활성화
+                miniGamePanel.SetActive(true);
+                Cursor.SetCursor(cursor, new Vector2(0, 0), 0);
+            }
         }
     }
 

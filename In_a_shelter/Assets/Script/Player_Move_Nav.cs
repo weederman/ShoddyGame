@@ -6,12 +6,16 @@ using UnityEngine.AI;
 public class Player_Move_Nav : MonoBehaviour
 {
     private NavMeshAgent agent;
-    public Camera cam;
+    //public Camera cam;
     private Vector2 targetPosition;
-
+    SpriteRenderer playerRenderer;
+    GameObject[] objects;
     void Start()
     {
-        agent=GetComponent<NavMeshAgent>();
+        objects = GameObject.FindGameObjectsWithTag("Obstacle");
+        playerRenderer = this.GetComponent<SpriteRenderer>();
+        Debug.Log(objects.Length);
+        agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         targetPosition = transform.position;
@@ -28,5 +32,20 @@ public class Player_Move_Nav : MonoBehaviour
 
         // 플레이어를 목표 위치로 이동
         agent.SetDestination(targetPosition);
+
+        foreach (GameObject obj in objects)
+        {
+            SpriteRenderer objectRenderer = obj.GetComponent<SpriteRenderer>();
+
+            if (this.transform.position.y > obj.transform.position.y)
+            {
+                playerRenderer.sortingOrder = objectRenderer.sortingOrder - 1;
+                Debug.Log(obj.name);
+            }
+            else
+            {
+                //playerRenderer.sortingOrder = objectRenderer.sortingOrder + 1;
+            }
+        }
     }
 }

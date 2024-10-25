@@ -7,13 +7,17 @@ using static UnityEditorInternal.ReorderableList;
 
 public class Trash_Move : MonoBehaviour,IBeginDragHandler, IEndDragHandler,IDragHandler
 {
+    public Sprite[] trash;
     public static Vector2 DefaultPos;
+    Image img;
     //private bool isDragging = false; // 드래그 중인지 여부를 나타내는 플래그
     private bool isClickAllowed = true; // 클릭이 허용되는지 여부를 나타내는 플래그
     private float clickCooldown = 0.1f; // 드래그 후 클릭을 무시할 시간 (초 단위)
     void Start()
     {
-        
+        img=GetComponent<Image>();
+        int trash_index = Random.Range(0, 9);
+        img.sprite = trash[trash_index];
     }
 
     // Update is called once per frame
