@@ -2993,11 +2993,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d357a2e359cbaed41ad55d93103561de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
-  moveTime: 2
-  waitTime: 1
-  topLeftBoundary: {fileID: 2043409190}
-  bottomRightBoundary: {fileID: 1301456543}
+  roamRadius: 5
+  moveInterval: 2
 --- !u!1 &431834045
 GameObject:
   m_ObjectHideFlags: 0
@@ -4258,6 +4255,8 @@ MonoBehaviour:
   survivalDays: 0
   Food: 0
   Material: 0
+  Medical: 0
+  NPC: 
 --- !u!4 &1392843181
 Transform:
   m_ObjectHideFlags: 0
@@ -4449,10 +4448,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetObject: {fileID: 2104834122}
-  f_Img: {fileID: 431834046}
-  f_map_out: {fileID: 1914572145}
+  f_Img: {fileID: 0}
+  f_map_out: {fileID: 0}
   radius: 2
-  mapImage: {fileID: 540808141}
+  UImanager: {fileID: 0}
+  mapImage: {fileID: 0}
   objectMaterial: {fileID: 2100000, guid: 8a90e519ef2e9d6478467964f5baa4a4, type: 2}
   outlineProperty: _OutlineEnabled
 --- !u!1 &1914572143

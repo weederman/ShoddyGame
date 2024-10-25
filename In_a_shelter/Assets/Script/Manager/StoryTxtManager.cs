@@ -8,36 +8,36 @@ public class StoryTxt
 {
     [TextArea]
     public string Text;
+    public string Title;
     public Sprite CharacterImg;
     public Sprite BGImg;
 }
 
 public class StoryTxtManager : MonoBehaviour
 {
-    [SerializeField]
-    private SpriteRenderer Sp_Character;
-    [SerializeField]
-    private SpriteRenderer Sp_txtBox;
-    [SerializeField]
-    private SpriteRenderer Sp_BG;
-    [SerializeField]
-    private Text T_txt;
+    [SerializeField] private Image Sp_Character;
+    [SerializeField] private GameObject Sp_txtBox;
+    [SerializeField] private Image Sp_BG;
+    [SerializeField] private Text T_title;
+    [SerializeField] private Text T_txt;
 
-    private bool isDialogue = false; //대화가 진행중인지 알려줄 변수
-    private int count = 0; //대사가 얼마나 진행됐는지 알려줄 변수
+    private bool isDialogue = false;
+    private int count = 0;
+    private bool isTyping = false;
+    private bool canSkip = false;
 
     [SerializeField] private StoryTxt[] storyTxt;
 
+    private void Start()
+    {
+        ShowDialogue();
+    }
 
-
-
-
-    //이제 추가로 아래의 ShowDialogue를 사용하는 함수나 update부분에서 사용
     public void ShowDialogue()
     {
-        ONOFF(true); //대화가 시작됨
+        ONOFF(true);
         count = 0;
-        NextDialogue(); //호출되자마자 대사가 진행될 수 있도록 
+        NextDialogue();
     }
 
     private void ONOFF(bool _flag)
@@ -50,25 +50,61 @@ public class StoryTxtManager : MonoBehaviour
 
     private void NextDialogue()
     {
-        //첫번째 대사와 첫번째 CharacterImg부터 계속 다음 CharacterImg로 진행되면서 화면에 보이게 된다. 
-        T_txt.text = storyTxt[count].Text;
+        T_title.text = storyTxt[count].Title;
         Sp_Character.sprite = storyTxt[count].CharacterImg;
         Sp_BG.sprite = storyTxt[count].BGImg;
-        count++; //다음 대사와 CharacterImg가 나오도록 
+        StartCoroutine(TypeText(storyTxt[count].Text));
+        count++;
+    }
 
+    private IEnumerator TypeText(string text)
+    {
+        isTyping = true;
+        T_txt.text = "";
+
+        foreach (char letter in text.ToCharArray())
+        {
+            T_txt.text += letter;
+            yield return new WaitForSeconds(0.05f);
+
+            if (canSkip)  // 스페이스바가 눌리면 텍스트 즉시 완료
+            {
+                T_txt.text = text;
+                break;
+            }
+        }
+
+        isTyping = false;
+        canSkip = false;
     }
 
     void Update()
     {
-        //spacebar 누를 때마다 대사가 진행되도록. 
-        if (isDialogue) //활성화가 되었을 때만 대사가 진행되도록
+        if (isDialogue)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                //대화의 끝을 알아야함.
-                if (count < storyTxt.Length) NextDialogue(); //다음 대사가 진행됨
-                else ONOFF(false); //대사가 끝남
+                if (isTyping) // 타이핑 중일 때 스페이스바가 눌리면 텍스트를 완료
+                {
+                    canSkip = true;
+                    return;
+                }
+
+                if (count < storyTxt.Length)
+                {
+                    StartCoroutine(WaitAndNextDialogue(0.2f)); // 0.2초 후에 다음 대사로
+                }
+                else
+                {
+                    ONOFF(false);
+                }
             }
         }
+    }
+
+    private IEnumerator WaitAndNextDialogue(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        NextDialogue();
     }
 }
