@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1844337276050664734}
   - component: {fileID: 1978519537431270582}
   - component: {fileID: 4755886644855283996}
+  - component: {fileID: 1283104986463256298}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -203,7 +204,7 @@ MonoBehaviour:
   targetObject: {fileID: 0}
   f_Img: {fileID: 8284943817746599967}
   radius: 2
-  event_issued: 0
+  event_issued: 1
   reader: {fileID: 1844337276050664734}
   cvsFileName: 
 --- !u!195 &4755886644855283996
@@ -228,6 +229,27 @@ NavMeshAgent:
   m_BaseOffset: 2.52
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &1283104986463256298
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6919970771420727186}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3869b51f8fee3a349871b054f3293dc3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8284943817746599967
 GameObject:
   m_ObjectHideFlags: 0
