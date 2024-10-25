@@ -7,55 +7,59 @@ public class cvsReader : MonoBehaviour
 {
     public List<Dictionary<string, object>> data_Chat = new List<Dictionary<string, object>>();
 
-    // ÆÄÀÏÀ» ÀĞ¾î¿À´Â ¸Ş¼­µå
+    // íŒŒì¼ì„ ì½ì–´ì˜¤ëŠ” ë©”ì„œë“œ
     public List<Dictionary<string, object>> ReadCSV(string cvsFileName)
     {
         string path = Application.dataPath + "/" + cvsFileName;
 
-        // StreamReader·Î ÆÄÀÏ ÀĞ±â
-        Debug.Log("CSV ÆÄÀÏ °æ·Î: " + path);
+        // StreamReaderë¡œ íŒŒì¼ ì½ê¸°
+        Debug.Log("CSV íŒŒì¼ ê²½ë¡œ: " + path);
         StreamReader reader = new StreamReader(path);
 
-        // Ã¹ ¹øÂ° ÁÙ(Çì´õ) ÀĞ±â
+        // ì²« ë²ˆì§¸ ì¤„(í—¤ë”) ì½ê¸°
         string headerLine = reader.ReadLine();
         if (string.IsNullOrEmpty(headerLine))
         {
-            Debug.LogError("Çì´õ°¡ ºñ¾î ÀÖ½À´Ï´Ù.");
+            Debug.LogError("í—¤ë”ê°€ ë¹„ì–´ ìˆìŠµë‹ˆë‹¤.");
         }
 
-        // Çì´õ ºĞ¸®
+        // í—¤ë” ë¶„ë¦¬
         var headers = headerLine.Split(',');
 
-        // °¢ ÁÙÀ» ÀĞ¾î Dictionary¿¡ ÀúÀå
+        // ê° ì¤„ì„ ì½ì–´ Dictionaryì— ì €ì¥
         bool isFinish = false;
 
         while (!isFinish)
         {
-            string dataLine = reader.ReadLine(); // ÇÑ ÁÙ ÀĞ±â
+            string dataLine = reader.ReadLine(); // í•œ ì¤„ ì½ê¸°
 
             if (dataLine == null)
             {
-                // ¸¶Áö¸· ÁÙÀÌ¸é ¹İº¹¹® Å»Ãâ
+                // ë§ˆì§€ë§‰ ì¤„ì´ë©´ ë°˜ë³µë¬¸ íƒˆì¶œ
                 isFinish = true;
                 break;
             }
 
             
-            var splitData = dataLine.Split(','); // µ¥ÀÌÅÍ ÆÄ½Ì
+            var splitData = dataLine.Split(','); // ë°ì´í„° íŒŒì‹±
             
 
-            // »õ·Î¿î Dictionary »ı¼º ¹× µ¥ÀÌÅÍ Ãß°¡
+            // ìƒˆë¡œìš´ Dictionary ìƒì„± ë° ë°ì´í„° ì¶”ê°€
             var entry = new Dictionary<string, object>();
             for (int i = 0; i < headers.Length; i++)
             {
-                entry[headers[i]] = splitData[i].Replace("%", ",").Trim(); // Çì´õ¸¦ Å°·Î »ç¿ë
+                entry[headers[i]] = splitData[i].Replace("%", ",").Trim(); // í—¤ë”ë¥¼ í‚¤ë¡œ ì‚¬ìš©
             }
 
-            // List¿¡ Dictionary Ãß°¡
+            // Listì— Dictionary ì¶”ê°€
             data_Chat.Add(entry);
+
         }
 
         reader.Close();
+
         return data_Chat;
+
+
     }
 }

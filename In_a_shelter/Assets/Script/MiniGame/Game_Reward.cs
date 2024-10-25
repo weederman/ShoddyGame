@@ -43,13 +43,16 @@ public class NewBehaviourScript : MonoBehaviour, IBeginDragHandler, IEndDragHand
     public void OnEndDrag(PointerEventData eventData)
     {
         // 드래그가 끝났을 때 실행될 코드
-        Debug.Log("드래그가 끝났습니다.");
+        
         Vector2 mousePos = Input.mousePosition;
 
         this.transform.position = mousePos;
         //isDragging = false; // 드래그 종료
         StartCoroutine(ResetClickCooldown()); // 클릭 쿨다운 시작
+        
         minigame.End_Minigame(reward_index);
+        Destroy(this.gameObject);
+        Debug.Log("드래그가 끝났습니다.");
     }
     private IEnumerator ResetClickCooldown()
     {

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BackGround
   - GameOverZone
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -42,4 +43,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: "\uAC00\uD310\uB300LOW"
+    uniqueID: 997537691
+    locked: 0
+  - name: "\uAC00\uD310\uB300MID"
+    uniqueID: 4234409625
     locked: 0

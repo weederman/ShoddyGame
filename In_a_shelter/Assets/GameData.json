@@ -1,6 +1,6 @@
 {
-    "survivalDays": 3,
-    "Food": 10,
-    "Material": 10,
-    "Medical": 10
+    "survivalDays": 1,
+    "Food": 0,
+    "Material": 0,
+    "Medical": 0
 }
