@@ -103,6 +103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roamRadius: 5
   moveInterval: 4
+  growlSound: {fileID: 8300000, guid: cca13f5612dfd3a4e875484d25cc34ac, type: 3}
+  chaseSound: {fileID: 8300000, guid: 22a0be6085a057b4e9ac037717dbb769, type: 3}
 --- !u!50 &6431253623131538941
 Rigidbody2D:
   serializedVersion: 4
