@@ -11,7 +11,7 @@ public class Camera_Move : MonoBehaviour
     void LateUpdate()
     {
         // 카메라가 따라갈 위치 계산
-        Vector3 targetPosition = new Vector3(player.position.x, player.position.y, transform.position.z) + offset;
+        Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, transform.position.z) + offset;
 
         // 부드러운 이동을 위해 Lerp 사용
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, targetPosition, smoothSpeed);
