@@ -8,10 +8,12 @@ public class FadeInOutManager : MonoBehaviour
 {
     public Image fadeScreen; // 페이드 스크린
     public TextMeshProUGUI daysText; // 날짜 표시 텍스트
+    private GameManager gameManager;
     public bool isTyping = false;
     DialogueManager logManager;
     private void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
         logManager = FindObjectOfType<DialogueManager>();
         fadeScreen.gameObject.SetActive(true); 
         StartCoroutine(FadeOut());
@@ -100,6 +102,7 @@ public class FadeInOutManager : MonoBehaviour
         GameManager.Instance.survivalDays++;
         daysText.text = "";
         StartCoroutine(NextDayCoroutine());
+        gameManager.ResetTimeToMorning();
     }
     private IEnumerator NextDayCoroutine()
     {
@@ -110,7 +113,7 @@ public class FadeInOutManager : MonoBehaviour
     public void AdventureStart()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Adventure");
+        SceneManager.LoadScene("Adventure2");
     }
     public void Get_Resource()
     {

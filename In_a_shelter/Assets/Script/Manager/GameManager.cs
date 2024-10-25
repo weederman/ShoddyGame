@@ -1,27 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public int survivalDays = 0;  // 생존일 수
+    public int survivalDays = 0;
     public int Food = 0;
     public int Material = 0;
     public int Medical = 0;
     public bool[] NPC;
 
-    public Text Timer;
-    private int hour = 0;
-    private int minute = 0;
-
     private FadeInOutManager FadeInOutManager;
     private string currentSceneName;
-
     private float timeElapsed = 0f;
+
+    public int hour = 6;
+    public int minute = 0;
 
     private void Awake()
     {
@@ -42,14 +39,14 @@ public class GameManager : MonoBehaviour
         currentSceneName = SceneManager.GetActiveScene().name;
 
         Time.timeScale = 1;
-        hour = 6;
-        UpdateTimerText();
+        ResetTimeToMorning();
     }
 
     private void Update()
     {
         timeElapsed += Time.deltaTime;
 
+        // 매 5초마다 시간 증가
         if (timeElapsed >= 5f)
         {
             timeElapsed = 0f;
@@ -61,30 +58,25 @@ public class GameManager : MonoBehaviour
                 hour += 1;
             }
 
-            UpdateTimerText();
             Debug.Log($"시간: {hour}시 {minute}분");
         }
 
-        if(hour == 22)
+        // 22시가 되면 새로운 날로 넘어가고 시간 초기화
+        if (hour == 22)
         {
             FadeInOutManager.NextDay();
-            hour = 6;
-        }
-
-        if(currentSceneName != "Shelter")
-        {
-            FadeInOutManager.NextDay();
-            hour = 6;
+            ResetTimeToMorning();
         }
     }
 
-    private void UpdateTimerText()
+    public void GameOver()
     {
-        Timer.text = hour.ToString("D2") + ":" + minute.ToString("D2");
+        ResetTimeToMorning();
     }
 
-    public void gameOver()
+    public void ResetTimeToMorning()
     {
-
+        hour = 6;
+        minute = 0;
     }
 }
