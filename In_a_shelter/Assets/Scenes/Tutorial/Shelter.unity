@@ -2103,7 +2103,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1081344610
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2618,7 +2618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnLocation: {fileID: 1357634612}
   npcs:
-  - {fileID: 6919970771420727186, guid: 0bc201786163c754b9b3e09f02073f69, type: 3}
+  - {fileID: 6919970771420727186, guid: 127c19982577c1d42899b0e4c07a2988, type: 3}
 --- !u!4 &1357634612
 Transform:
   m_ObjectHideFlags: 0

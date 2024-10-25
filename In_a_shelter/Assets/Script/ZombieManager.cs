@@ -25,7 +25,7 @@ public class ZombieManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // 씬이 바뀌어도 유지
+            // DontDestroyOnLoad(gameObject); // 삭제하여 씬 전환 시 객체 유지하지 않음
         }
         else
         {
