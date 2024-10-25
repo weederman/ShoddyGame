@@ -141,7 +141,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 1.3
   m_Speed: 3
-  m_Acceleration: 100
+  m_Acceleration: 200
   avoidancePriority: 50
   m_AngularSpeed: 500
   m_StoppingDistance: 0
@@ -162,7 +162,7 @@ Animator:
   m_GameObject: {fileID: 4487354011625229743}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e79564a54181c094b8f0137bafc42687, type: 2}
+  m_Controller: {fileID: 9100000, guid: 82eba25474b158d429ee6d31a41d46c8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

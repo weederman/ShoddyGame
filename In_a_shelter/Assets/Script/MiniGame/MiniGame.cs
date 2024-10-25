@@ -30,7 +30,7 @@ public class MiniGame : MonoBehaviour
         Vector3 currentMousePosition = Input.mousePosition;
         
         float distance = Vector3.Distance(previousMousePosition, currentMousePosition);
-        Debug.Log(distance);
+        //Debug.Log(distance);
         slideValue += distance * gaugeSpeedMultiplier;
         slideValue = Mathf.Clamp((float)slideValue,0,1000);
         slideValue -= 0.8f;
@@ -62,6 +62,6 @@ public class MiniGame : MonoBehaviour
                 ZombieManager.Instance.TriggerChaseAll(10f);
                 break;
         }
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
     }
 }
