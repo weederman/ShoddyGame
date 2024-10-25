@@ -17,7 +17,9 @@ public class Map_selection : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         GameObject clickedObject = eventData.pointerCurrentRaycast.gameObject;
         Debug.Log(clickedObject);
-        SceneManager.LoadScene("Adventure"); //³ªÁß¿¡ ¸Ê ´õ »ı±â¸é objcct ÀÌ¸§À¸·Î ±¸º°ÇØ¼­ µû·Î ÇØ¾ßÁö
+
+        SceneManager.LoadScene("Adventure1"); //ë‚˜ì¤‘ì— ë§µ ë” ìƒê¸°ë©´ objcct ì´ë¦„ìœ¼ë¡œ êµ¬ë³„í•´ì„œ ë”°ë¡œ í•´ì•¼ì§€
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)
