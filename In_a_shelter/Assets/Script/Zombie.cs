@@ -69,6 +69,7 @@ public class Zombie : MonoBehaviour
         {
             SpriteRenderer objectRenderer = obj.GetComponent<SpriteRenderer>();
 
+            // 월드 좌표에서 Y 값 비교
             if (player.transform.position.y > obj.transform.position.y)
             {
                 playerRenderer.sortingOrder = objectRenderer.sortingOrder - 1;
@@ -78,6 +79,7 @@ public class Zombie : MonoBehaviour
                 //playerRenderer.sortingOrder = objectRenderer.sortingOrder + 1;
             }
         }
+
     }
 
     public void SetChasing(bool value, float duration)
@@ -120,7 +122,10 @@ public class Zombie : MonoBehaviour
         {
             chasing = false; // 쫓기 중지
             agent.ResetPath(); // 현재 경로를 초기화하여 정지
-            StartCoroutine(ResumeRoamingAfterDelay(1f)); // 1초 후에 배회 재개
+            if (gameObject.activeInHierarchy) // GameObject가 활성화된 상태인지 확인
+            {
+                StartCoroutine(ResumeRoamingAfterDelay(1f)); // 1초 후에 배회 재개
+            }
         }
     }
 

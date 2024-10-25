@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 629160280042099729}
   - component: {fileID: 1597486023804680370}
   - component: {fileID: 8620647435247284882}
+  - component: {fileID: 6082685032404323911}
   m_Layer: 0
   m_Name: Box
   m_TagString: Untagged
@@ -147,6 +148,22 @@ MonoBehaviour:
   interactionKeyImage: {fileID: 4784337423934608287}
   miniGamePanel: {fileID: 0}
   cursor: {fileID: 2800000, guid: 6b9f1eca6c63dfd46b9666dbe9e3d7fb, type: 3}
+--- !u!208 &6082685032404323911
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996120731699083390}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.8750001, y: 1.245, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &4784337423934608287
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,8 +190,8 @@ Transform:
   m_GameObject: {fileID: 4784337423934608287}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 0.2523, y: 0.2523, z: 0.2523}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0.2523}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5869933648369141627}
@@ -220,7 +237,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 434177ab5931a5949a835de5f500512a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3bcd9e1d6f9ddc6408d46dc639895f89, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
