@@ -21,7 +21,7 @@ public class EventBox : MonoBehaviour
     {
         if (miniGamePanel == null)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
         else
         {
