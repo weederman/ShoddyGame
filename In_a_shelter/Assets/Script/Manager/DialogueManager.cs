@@ -79,7 +79,7 @@ public class DialogueManager : MonoBehaviour
                 break;
                 
         }
-        txt_title.text = this.gameObject.name;
+        txt_title.text = log[count].title;
         ONOFF(true);
         txt_dialogue.text = log[count].dialogue;
         count = 0;

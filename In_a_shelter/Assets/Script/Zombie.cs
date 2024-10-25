@@ -8,15 +8,20 @@ public class Zombie : MonoBehaviour
     private GameObject player; // 플레이어 객체
     private NavMeshAgent agent; // NavMeshAgent 참조
     private CircleCollider2D circleCollider; // 원의 콜라이더 참조
-
+    private Animator animator;
+    private SpriteRenderer spriteRenderer; // SpriteRenderer 참조
+    bool walk = false;
     private bool chasing; // 플레이어를 쫓고 있는지 여부
     public float roamRadius = 5f; // 배회 반경
     public float moveInterval = 2f; // 이동 간격 (초)
     private Vector3 roamTarget; // 배회할 목표 위치
-
+    GameObject[] objects;
+    SpriteRenderer playerRenderer;
     void Start()
     {
+        animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        spriteRenderer = GetComponent<SpriteRenderer>(); // SpriteRenderer 가져오기
         circleCollider = GetComponentInChildren<CircleCollider2D>(); // 하위 콜라이더 가져오기
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -25,7 +30,10 @@ public class Zombie : MonoBehaviour
         chasing = false; // 초기값 false로 설정
         SetRoamTarget(); // 배회 목표 설정
         ZombieManager.Instance.RegisterZombie(this); // 좀비 매니저에 등록
-
+        
+        playerRenderer = player.GetComponent<SpriteRenderer>();
+        objects = GameObject.FindGameObjectsWithTag("Obstacle");
+        Debug.Log(objects);
         StartCoroutine(RoamCoroutine());
     }
 
@@ -35,6 +43,43 @@ public class Zombie : MonoBehaviour
         {
             agent.SetDestination(player.transform.position);
         }
+
+        // 속도에 따라 방향을 바꿔줍니다.
+        if (agent.velocity.x > 0) // 오른쪽으로 이동 중
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (agent.velocity.x < 0) // 왼쪽으로 이동 중
+        {
+            spriteRenderer.flipX = false;
+        }
+
+        // 애니메이션 처리
+        if (agent.velocity.sqrMagnitude > 0.01f && !walk)
+        {
+            walk = true;
+            animator.SetBool("Walk", true);  // 걷는 애니메이션 트리거
+        }
+        else if (agent.velocity.sqrMagnitude <= 0.01f && walk)
+        {
+            walk = false;
+            animator.SetBool("Walk", false);  // 정지 애니메이션 트리거
+        }
+        foreach (GameObject obj in objects)
+        {
+            SpriteRenderer objectRenderer = obj.GetComponent<SpriteRenderer>();
+
+            // 월드 좌표에서 Y 값 비교
+            if (player.transform.position.y > obj.transform.position.y)
+            {
+                playerRenderer.sortingOrder = objectRenderer.sortingOrder - 1;
+            }
+            else
+            {
+                //playerRenderer.sortingOrder = objectRenderer.sortingOrder + 1;
+            }
+        }
+
     }
 
     public void SetChasing(bool value, float duration)
@@ -57,7 +102,7 @@ public class Zombie : MonoBehaviour
     {
         if (other.gameObject == player)
         {
-            SetChasing(true, 5f); // 2초 동안 chasing
+            SetChasing(true, 5f); // 5초 동안 chasing
             ZombieManager.Instance.TriggerChaseAll(5f); // 모든 좀비를 chasing 상태로 전환
         }
     }
@@ -77,7 +122,10 @@ public class Zombie : MonoBehaviour
         {
             chasing = false; // 쫓기 중지
             agent.ResetPath(); // 현재 경로를 초기화하여 정지
-            StartCoroutine(ResumeRoamingAfterDelay(1f)); // 1초 후에 배회 재개
+            if (gameObject.activeInHierarchy) // GameObject가 활성화된 상태인지 확인
+            {
+                StartCoroutine(ResumeRoamingAfterDelay(1f)); // 1초 후에 배회 재개
+            }
         }
     }
 
@@ -88,9 +136,9 @@ public class Zombie : MonoBehaviour
             if (!chasing)
             {
                 // 배회 목표 설정 및 이동
-                yield return new WaitForSeconds(Random.Range(1f,moveInterval)); // 이동 간격만큼 대기
+                yield return new WaitForSeconds(Random.Range(1f, moveInterval)); // 이동 간격만큼 대기
                 agent.SetDestination(roamTarget);
-                
+
                 SetRoamTarget(); // 새로운 목표 설정
             }
             else
@@ -115,7 +163,3 @@ public class Zombie : MonoBehaviour
         roamTarget = new Vector3(transform.position.x + randomX, transform.position.y + randomY, transform.position.z);
     }
 }
-
-
-
-
