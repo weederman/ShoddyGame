@@ -15,12 +15,13 @@ public class Dialogue
     public string title;
     public string selection1Text;
     public string selection2Text;
-    
+
+    public bool isSelection;
+
 }
 
 public class DialogueManager : MonoBehaviour
 {
-    public bool isSelection = false;
     public Button Selection1;
     public Button Selection2;
     [SerializeField] private GameObject sprite_DialogueBox;
@@ -36,12 +37,14 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         sprite_DialogueBox = GameObject.Find("Canvas").transform.Find("TextPanel").gameObject;
+        Debug.Log(sprite_DialogueBox.gameObject);
         FadeManager = FindObjectOfType<FadeInOutManager>();
         Text[] Panel_Text=sprite_DialogueBox.GetComponentsInChildren<Text>();
         Debug.Log(Panel_Text.Length);
         txt_title = Panel_Text[0];
         txt_dialogue = Panel_Text[1];
         Button[] Panel_Button=sprite_DialogueBox.GetComponentsInChildren<Button>();
+        Debug.Log(Panel_Button.Length);
         Selection1 = Panel_Button[0];
         Selection2 = Panel_Button[1];
         txt_selection1=Selection1.GetComponentInChildren<Text>();
@@ -130,7 +133,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (isDialogue)
         {
-            if (isSelection)//선택지가 존재하는 대화창이고, 대화가 끝났을 경우 선택버튼 표시
+            if (log[count].isSelection)//선택지가 존재하는 대화창이면 선택버튼 표시
             {
                 Text Selection1Text = Selection1.GetComponentInChildren<Text>();
                 Text Selection2Text = Selection2.GetComponentInChildren<Text>();

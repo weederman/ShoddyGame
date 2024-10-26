@@ -108,7 +108,7 @@ public class NPC_RandomChat : MonoBehaviour
             if (bool.TryParse(isSelectionStr, out bool isSelection))
             {
                 Debug.Log($"{randomNum} 대화 {i}번째 isSelelction값: {isSelection}");
-                logManager.isSelection = isSelection;
+                logManager.log[i].isSelection = isSelection;
             }
             else
             {
