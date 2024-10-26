@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         timeElapsed += Time.deltaTime;
 
         // 매 5초마다 시간 증가
-        if (timeElapsed >= 5f)
+        if (timeElapsed >= 2f)
         {
             timeElapsed = 0f;
             minute += 10;

@@ -50,13 +50,13 @@ public class MiniGame : MonoBehaviour
         switch (reward)
         {
             case 0:
-                GameManager.Instance.Food += 100;
+                GameManager.Instance.Food += Random.Range(1,5);
                 break;
             case 1:
-                GameManager.Instance.Material += 100;
+                GameManager.Instance.Material += Random.Range(1, 5);
                 break;
             case 2:
-                GameManager.Instance.Medical += 100;
+                GameManager.Instance.Medical += Random.Range(1, 5);
                 break;
             case 3:
                 ZombieManager.Instance.TriggerChaseAll(10f);

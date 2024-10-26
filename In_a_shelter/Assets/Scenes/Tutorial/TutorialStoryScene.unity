@@ -854,18 +854,16 @@ MonoBehaviour:
   T_title: {fileID: 1711934540}
   T_txt: {fileID: 1552784553}
   CharacterImg:
-  - {fileID: 21300000, guid: 169890e1144f3c645929c6bb15fe60fe, type: 3}
-  - {fileID: 21300000, guid: 6f05afe20b8da464d96ce2d9d740c656, type: 3}
-  - {fileID: 21300000, guid: 6f05afe20b8da464d96ce2d9d740c656, type: 3}
-  - {fileID: 21300000, guid: 169890e1144f3c645929c6bb15fe60fe, type: 3}
-  - {fileID: 21300000, guid: 169890e1144f3c645929c6bb15fe60fe, type: 3}
-  - {fileID: 21300000, guid: 6f05afe20b8da464d96ce2d9d740c656, type: 3}
-  - {fileID: 21300000, guid: 6f05afe20b8da464d96ce2d9d740c656, type: 3}
-  - {fileID: 21300000, guid: 169890e1144f3c645929c6bb15fe60fe, type: 3}
+  - {fileID: 21300000, guid: ce7c4d5d37ebf2a4f9a1bdb58b128b33, type: 3}
+  - {fileID: 21300000, guid: 0c0ad5a2abdf1a146a612d87f4400f4b, type: 3}
+  - {fileID: 21300000, guid: 9cc9478256afec94982b7f6697db659a, type: 3}
+  - {fileID: 21300000, guid: 1986585b0545307439c0bdb90159a26b, type: 3}
+  - {fileID: 21300000, guid: 743d9912fd4023441afc1a7a8034b6f9, type: 3}
   BGImg:
-  - {fileID: 21300000, guid: 4c49afaa8a2920b479bdbc0794b734d4, type: 3}
-  - {fileID: 21300000, guid: 9ce8bb976210f4b458794cb1993473c4, type: 3}
+  - {fileID: 21300000, guid: b45a17bfdd2c73d4381b43369b7a305b, type: 3}
+  - {fileID: 21300000, guid: 55c11da84ba17be439933116691b534c, type: 3}
   reader: {fileID: 1391546135}
+  cvsFileName: startScene.csv
 --- !u!114 &1391546135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,7 +876,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 244bbb6d06a74624fabd59c96376d7c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cvsFileName: startScene.csv
 --- !u!1 &1438440270
 GameObject:
   m_ObjectHideFlags: 0

@@ -3838,6 +3838,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeScreen: {fileID: 645151326}
   daysText: {fileID: 592903914}
+  gameOverPanel: {fileID: 5488220265598975963}
   isTyping: 0
 --- !u!4 &1711738221
 Transform:
@@ -4675,10 +4676,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameOverPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 3430940370390671490, guid: 08cc312ce8eefb540a287d795be59e4c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5220623075640619716, guid: 08cc312ce8eefb540a287d795be59e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 501477872}
+      objectReference: {fileID: 5488220265598975964}
+    - target: {fileID: 5220623075640619716, guid: 08cc312ce8eefb540a287d795be59e4c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: gameover
+      objectReference: {fileID: 0}
     - target: {fileID: 6485846486862737713, guid: 08cc312ce8eefb540a287d795be59e4c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4764,6 +4773,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08cc312ce8eefb540a287d795be59e4c, type: 3}
+--- !u!1 &5488220265598975963 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3430940370390671490, guid: 08cc312ce8eefb540a287d795be59e4c, type: 3}
+  m_PrefabInstance: {fileID: 5488220265598975962}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5488220265598975964 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8685275018472176443, guid: 08cc312ce8eefb540a287d795be59e4c, type: 3}
+  m_PrefabInstance: {fileID: 5488220265598975962}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5488220265598975963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075be68c0cd4b394cb22f3d87fe79a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
