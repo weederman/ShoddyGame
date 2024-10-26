@@ -17,9 +17,14 @@ public class Map_selection : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         GameObject clickedObject = eventData.pointerCurrentRaycast.gameObject;
         Debug.Log(clickedObject);
-
-        SceneManager.LoadScene("Adventure1"); //나중에 맵 더 생기면 objcct 이름으로 구별해서 따로 해야지
-
+        if (transform.name == "Map_1")
+        {
+            SceneManager.LoadScene("Adventure1"); //나중에 맵 더 생기면 objcct 이름으로 구별해서 따로 해야지
+        }
+        if(transform.name == "Map_2")
+        {
+            SceneManager.LoadScene("Adventure2"); //나중에 맵 더 생기면 objcct 이름으로 구별해서 따로 해야지
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
