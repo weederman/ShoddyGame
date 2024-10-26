@@ -210,7 +210,7 @@ MonoBehaviour:
   radius: 2
   event_issued: 1
   reader: {fileID: 1844337276050664734}
-  cvsFileName: 
+  cvsFileName: npc1.csv
 --- !u!195 &4755886644855283996
 NavMeshAgent:
   m_ObjectHideFlags: 0

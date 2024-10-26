@@ -133,7 +133,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (isDialogue)
         {
-            if (log[count].isSelection)//선택지가 존재하는 대화창이면 선택버튼 표시
+            if (log[count].isSelection && !isDialogue)//선택지가 존재하는 대화창이면 선택버튼 표시
             {
                 Text Selection1Text = Selection1.GetComponentInChildren<Text>();
                 Text Selection2Text = Selection2.GetComponentInChildren<Text>();

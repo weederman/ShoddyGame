@@ -145,7 +145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b222fa99309ee46addaa977b99b484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelection: 1
   Selection1: {fileID: 0}
   Selection2: {fileID: 0}
   sprite_DialogueBox: {fileID: 0}
@@ -160,22 +159,27 @@ MonoBehaviour:
     title: 
     selection1Text: 
     selection2Text: 
+    isSelection: 0
   - dialogue: 
     title: 
     selection1Text: 
     selection2Text: 
+    isSelection: 0
   - dialogue: 
     title: 
     selection1Text: 
     selection2Text: 
+    isSelection: 0
   - dialogue: 
     title: 
     selection1Text: 
     selection2Text: 
+    isSelection: 0
   - dialogue: 
     title: 
     selection1Text: 
     selection2Text: 
+    isSelection: 0
 --- !u!114 &1844337276050664734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +210,7 @@ MonoBehaviour:
   radius: 2
   event_issued: 0
   reader: {fileID: 1844337276050664734}
-  cvsFileName: 
+  cvsFileName: npc2.csv
 --- !u!195 &4755886644855283996
 NavMeshAgent:
   m_ObjectHideFlags: 0
