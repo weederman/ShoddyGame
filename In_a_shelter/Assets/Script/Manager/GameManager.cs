@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-
+    public bool tutorial = false;
     public int survivalDays = 0;
     public int Food = 0;
     public int Material = 0;
@@ -64,13 +64,18 @@ public class GameManager : MonoBehaviour
         // 22시가 되면 새로운 날로 넘어가고 시간 초기화
         if (hour == 22)
         {
-            FadeInOutManager.NextDay();
+            FadeInOutManager.NextDay();//날이 넘을때마다 식량 줄어들기, 식량이 0인 상태로 이틀이 지나면 게임오버
             ResetTimeToMorning();
         }
     }
 
     public void GameOver()
     {
+        tutorial = false;
+        survivalDays = 0;
+        Food = 0;
+        Material = 0;
+        Medical = 0;
         ResetTimeToMorning();
     }
 

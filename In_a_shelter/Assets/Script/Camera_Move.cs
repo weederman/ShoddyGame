@@ -13,7 +13,7 @@ public class Camera_Move : MonoBehaviour
         
         if (player.position.x > -9.1f && player.position.x< 9.1f)
         {
-            Debug.Log(player.position.y);
+            //Debug.Log(player.position.y);
             // 카메라가 따라갈 위치 계산
             Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, transform.position.z) + offset;
 

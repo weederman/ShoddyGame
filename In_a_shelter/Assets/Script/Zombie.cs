@@ -7,7 +7,7 @@ public class Zombie : MonoBehaviour
 {
     private GameObject player; // 플레이어 객체
     private NavMeshAgent agent; // NavMeshAgent 참조
-    private CircleCollider2D circleCollider; // 원의 콜라이더 참조
+    //public new CircleCollider2D collider2D;
     private Animator animator;
     private SpriteRenderer spriteRenderer; // SpriteRenderer 참조
     bool walk = false;
@@ -22,7 +22,6 @@ public class Zombie : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         spriteRenderer = GetComponent<SpriteRenderer>(); // SpriteRenderer 가져오기
-        circleCollider = GetComponentInChildren<CircleCollider2D>(); // 하위 콜라이더 가져오기
         agent.updateRotation = false;
         agent.updateUpAxis = false;
 
@@ -102,6 +101,7 @@ public class Zombie : MonoBehaviour
     {
         if (other.gameObject == player)
         {
+            Debug.Log("들어옴");
             SetChasing(true, 5f); // 5초 동안 chasing
             ZombieManager.Instance.TriggerChaseAll(5f); // 모든 좀비를 chasing 상태로 전환
         }
@@ -120,6 +120,7 @@ public class Zombie : MonoBehaviour
     {
         if (other.gameObject == player) // 플레이어가 트리거에서 나간 경우
         {
+            Debug.Log("나감");
             chasing = false; // 쫓기 중지
             agent.ResetPath(); // 현재 경로를 초기화하여 정지
             if (gameObject.activeInHierarchy) // GameObject가 활성화된 상태인지 확인
@@ -128,7 +129,6 @@ public class Zombie : MonoBehaviour
             }
         }
     }
-
     IEnumerator RoamCoroutine()
     {
         while (true)

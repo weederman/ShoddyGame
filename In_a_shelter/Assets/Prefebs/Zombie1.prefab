@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8132651311850897567}
   - component: {fileID: 8649001126466126068}
-  - component: {fileID: 3127260584479069989}
+  - component: {fileID: 2978823757939523197}
   - component: {fileID: 204097241087334866}
   - component: {fileID: 1967398327836572585}
   - component: {fileID: 763535429624617155}
+  - component: {fileID: -4288955851864634722}
   m_Layer: 0
   m_Name: Zombie1
   m_TagString: Untagged
@@ -89,7 +90,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3127260584479069989
+--- !u!114 &2978823757939523197
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,9 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roamRadius: 5
-  moveInterval: 4
-  growlSound: {fileID: 8300000, guid: 04186903a947b924e92b1a8b6c243e6d, type: 3}
-  chaseSound: {fileID: 8300000, guid: b97369bb0633b914c9ebe35d2d760145, type: 3}
+  moveInterval: 2
 --- !u!50 &204097241087334866
 Rigidbody2D:
   serializedVersion: 4
@@ -142,7 +141,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1.3
-  m_Speed: 3
+  m_Speed: 2.6
   m_Acceleration: 200
   avoidancePriority: 50
   m_AngularSpeed: 500
@@ -175,6 +174,41 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!58 &-4288955851864634722
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711491780176828176}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 6
 --- !u!1 &6075499662630435537
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,6 +220,7 @@ GameObject:
   - component: {fileID: 1116735219090782902}
   - component: {fileID: 721743307381720853}
   - component: {fileID: 4291173218360214979}
+  - component: {fileID: 2969851137587497109}
   m_Layer: 0
   m_Name: Radius
   m_TagString: Untagged
@@ -294,4 +329,17 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.52
+  m_Radius: 0.2
+--- !u!114 &2969851137587497109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6075499662630435537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b0c9efa1246e641bb3e63069fb86b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  over: {fileID: 0}

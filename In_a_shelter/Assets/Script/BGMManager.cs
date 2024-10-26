@@ -7,7 +7,7 @@ public class BGMManager : MonoBehaviour
     public AudioClip chaseMusic; // 추격 BGM
     private AudioSource audioSource;
     private bool isChasing = false; // 현재 추적 상태 여부
-
+    public GameObject PausePanel;
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -16,6 +16,11 @@ public class BGMManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0f;
+            PausePanel.SetActive(true);
+        }
         bool newIsChasing = ZombieManager.Instance.chasing;
         if (newIsChasing != isChasing) // 상태가 변경될 때만 처리
         {
