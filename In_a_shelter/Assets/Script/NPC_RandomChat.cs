@@ -94,26 +94,57 @@ public class NPC_RandomChat : MonoBehaviour
             logManager.log[i].title = (string)selectedDialogueGroup[i]["name"];         // CSV의 "name" 필드
             logManager.log[i].dialogue = (string)selectedDialogueGroup[i]["dialogue"];   // CSV의 "dialogue" 필드
             logManager.log[i].selection1Text = (string)selectedDialogueGroup[i]["selection_dialogue"]; // CSV의 선택지1 필드
-            if (i < selectedDialogueGroup[i].Count - 1)
+            if (i < selectedDialogueGroup.Count - 1)
             {
-                logManager.log[i].selection2Text = (string)selectedDialogueGroup[i]["selection_dialogue"]; // CSV의 선택지2 필드
+                logManager.log[i].selection2Text = (string)selectedDialogueGroup[i + 1]["selection_dialogue"]; // CSV의 선택지2 필드
             }
             Debug.Log($"두번째 선택지 대사: {logManager.log[i].selection2Text}");
 
 
             // CSV의 is_selection 값을 DialogueManager의 isSelection에 반영
-                string isSelectionStr = selectedDialogueGroup[i]["is_selection"].ToString();
+             string isSelectionStr = selectedDialogueGroup[i]["is_selection"].ToString().ToLower();
 
-                // bool 값으로 안전하게 변환
-                if (bool.TryParse(isSelectionStr, out bool isSelection))
+            // bool 값으로 안전하게 변환
+            if (bool.TryParse(isSelectionStr, out bool isSelection))
+            {
+                Debug.Log($"{randomNum} 대화 {i}번째 isSelelction값: {isSelection}");
+                logManager.isSelection = isSelection;
+            }
+            else
+            {
+                Debug.LogError($"'is_selection' 필드 값 '{isSelectionStr}'는 유효한 bool 값이 아닙니다.");
+            }
+
+            if (isSelection)
+            {
+                // Attempt to parse next_dialogue as an integer safely
+                if (selectedDialogueGroup[i].ContainsKey("next_dialogue") &&
+                    int.TryParse(selectedDialogueGroup[i]["next_dialogue"].ToString(), out int nextDialogue))
                 {
-                    Debug.Log($"{randomNum} 대화 {i}번째 isSelelction값: {isSelection}");
-                    logManager.isSelection = isSelection;
+                    count = nextDialogue;
                 }
                 else
                 {
-                    Debug.LogError($"'is_selection' 필드 값 '{isSelectionStr}'는 유효한 bool 값이 아닙니다.");
+                    Debug.LogError("Invalid or missing value for 'next_dialogue'");
                 }
+            }
+            else
+            {
+                if (i < selectedDialogueGroup.Count - 1)
+                {
+                    // Similar safe parsing for non-selection path
+                    if (selectedDialogueGroup[i + 1].ContainsKey("next_dialogue") &&
+                        int.TryParse(selectedDialogueGroup[i + 1]["next_dialogue"].ToString(), out int nextDialogue))
+                    {
+                        count = nextDialogue;
+                    }
+                    else
+                    {
+                        Debug.LogError("Invalid or missing value for 'next_dialogue' in non-selection path");
+                    }
+                }
+            }
+
         }
 
         Debug.Log("대화 내용 업데이트 완료");

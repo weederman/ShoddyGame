@@ -11,10 +11,12 @@ public class FadeInOutManager : MonoBehaviour
     private GameManager gameManager;
     public bool isTyping = false;
     DialogueManager logManager;
+    NPC_RandomChat npcManager;
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         logManager = FindObjectOfType<DialogueManager>();
+        npcManager = FindObjectOfType<NPC_RandomChat>();
         fadeScreen.gameObject.SetActive(true); 
         StartCoroutine(FadeOut());
     }
@@ -124,6 +126,8 @@ public class FadeInOutManager : MonoBehaviour
     }
     public void Remove_Resource()
     {
-        GameManager.Instance.Food -= 10;
+        GameManager.Instance.Food -= (int)npcManager.rand_chat[logManager.count]["using_food"];
+        GameManager.Instance.Material -= (int)npcManager.rand_chat[logManager.count]["using_metarial"];
+        GameManager.Instance.Medical -= (int)npcManager.rand_chat[logManager.count]["using_metarial"];
     }
 }
